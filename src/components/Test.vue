@@ -9,13 +9,9 @@
             </el-col>
             <el-col v-show="!isCollapse" :span="18">企业（系统）名称</el-col>
           </el-row>
-<!--          <el-image class="img-circle cursor-pointer" @click="collapse()" style="width: 50px; height: 50px;background-color: gray;margin-top: 5px;margin-left: 7px;" :src="logoCompany" :fit="'fit'"></el-image>-->
         </el-header>
         <el-main style="height:calc(100% - 60px);text-align:left;padding: 0px;" >
           <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse" >
-<!--                   background-color="#545c64"-->
-<!--                   text-color="#fff"-->
-<!--                   active-text-color="#ffd04b">-->
             <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-location"></i>
@@ -100,7 +96,6 @@
   .el-aside {
     background-color: #D3DCE6;
     color: #333;
-    /*text-align: center;*/
     line-height: 200px;
   }
 
