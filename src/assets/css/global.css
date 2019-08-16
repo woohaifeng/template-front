@@ -1,0 +1,12 @@
+html,body {
+  padding: 0px;
+  margin: 0px;
+}
+
+.img-circle {
+border-radius: 50%;
+}
+
+.cursor-pointer {
+  cursor:pointer;
+}
