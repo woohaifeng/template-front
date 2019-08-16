@@ -1,76 +1,71 @@
 <template>
   <el-container style="height:100vh;">
-    <el-header>
-      <el-row>
-        <el-col :span="1" :gutter="20" style="text-align: left;">
-            <el-image class="img-circle cursor-pointer" @click="collapse()" style="width: 50px; height: 50px;background-color: white;margin-top: 5px;margin-left: 5px;" :src="logoCompany" :fit="'fit'"></el-image>
-        </el-col>
-        <el-col :span="4" :gutter="20">企业（系统）名称111</el-col>
-        <el-col :span="7">
-          <div class="grid-content">11111</div>
-        </el-col>
-        <el-col :span="12">
-          <div class="grid-content">11111</div>
-        </el-col>
-      </el-row>
-    </el-header>
-    <el-container style="height:calc(100% - 60px);">
-      <el-aside :width="isCollapse?'65px':'250px'">
-        <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
-                 :collapse="isCollapse">
-          <el-submenu index="1">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span slot="title">导航一</span>
-            </template>
-            <el-menu-item-group>
-              <span slot="title">分组一</span>
-              <el-menu-item index="1-1">选项1</el-menu-item>
-              <el-menu-item index="1-2">选项2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="分组2">
-              <el-menu-item index="1-3">选项3</el-menu-item>
-            </el-menu-item-group>
-            <el-submenu index="1-4">
-              <span slot="title">选项4</span>
-              <el-menu-item index="1-4-1">选项1</el-menu-item>
+    <el-aside :width="isCollapse?'65px':'260px'">
+      <el-container style="height:100vh;">
+        <el-header class="fw-bolder" style="background-color:#9970db;border-bottom: 1px solid #DCDFE6;padding: 0px;">
+          <el-row>
+            <el-col :span="6" style="text-align: left;">
+              <div class="block cursor-pointer" @click="collapse()"><el-avatar :size="45" :src="logoCompany" style="margin-top: 8px;margin-left: 10px;"></el-avatar></div>
+            </el-col>
+            <el-col v-show="!isCollapse" :span="18" class="fs-xs">AAAAAA<span class="fs-xxs">（BBBBBBBB系统）</span></el-col>
+          </el-row>
+        </el-header>
+        <el-main style="height:calc(100% - 60px);text-align:left;padding: 0px;" >
+          <el-menu default-active="1-4-1" class="el-menu-vertical-demo fw-bold" @open="handleOpen" @close="handleClose" :collapse="isCollapse" active-text-color="#A5DF00" text-color="#ffffff" style="background-color: #9970db;">
+            <el-menu-item index="1" class="menu-1" style="margin-top: 15px">
+              <i class="el-icon-s-home"></i>
+              <span slot="title">DASHBOARD</span>
+            </el-menu-item>
+
+            <el-submenu index="2" class="menu-1">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span slot="title">目录01</span>
+              </template>
+              <el-menu-item index="2-1" class="menu-2">
+                <template slot="title">
+                  <i class="el-icon-location"></i>
+                  <span slot="title">菜单01</span>
+                </template>
+              </el-menu-item>
+              <el-submenu index="2-2"  class="menu-2">
+                <template slot="title">
+                  <i class="el-icon-location"></i>
+                  <span slot="title">菜单02</span>
+                </template>
+                <el-menu-item index="2-2-1" class="menu-3">
+                  <template slot="title">
+                    <i class="el-icon-location"></i>
+                    <span slot="title">菜单01</span>
+                  </template>
+                </el-menu-item>
+              </el-submenu>
             </el-submenu>
-            <el-submenu index="1-4">
-              <span slot="title">选项4</span>
-              <el-menu-item index="1-4-1">选项1</el-menu-item>
-            </el-submenu>
-            <el-submenu index="1-4">
-              <span slot="title">选项4</span>
-              <el-menu-item index="1-4-1">选项1</el-menu-item>
-            </el-submenu>
-          </el-submenu>
-          <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <span slot="title">导航二</span>
-          </el-menu-item>
-          <el-menu-item index="3" disabled>
-            <i class="el-icon-document"></i>
-            <span slot="title">导航三</span>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <i class="el-icon-setting"></i>
-            <span slot="title">导航四</span>
-          </el-menu-item>
-        </el-menu>
-      </el-aside>
-      <el-main>
-        Main
-      </el-main>
+
+            <el-menu-item index="3" disabled>
+              <i class="el-icon-document"></i>
+              <span slot="title">导航三</span>
+            </el-menu-item>
+            <el-menu-item index="4">
+              <i class="el-icon-setting"></i>
+              <span slot="title">导航四</span>
+            </el-menu-item>
+          </el-menu>
+        </el-main>
+      </el-container>
+    </el-aside>
+    <el-container>
+      <el-header style="border: 1px solid #e5e5e5">Header</el-header>
+      <el-main style="background-color: #f7f7f8;">Main</el-main>
     </el-container>
   </el-container>
 </template>
-
 <script>
   export default {
     name: 'Home',
     data() {
       return {
-        isCollapse: true,
+        isCollapse: false,
         logoCompany: require('../assets/logo.png')
       };
     },
@@ -91,17 +86,16 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .el-header, .el-footer {
-    background-color: #ffffff;
-    color: #333;
+    color: #FFFFFF;
     text-align: center;
     line-height: 60px;
     padding: 0px;
+    font-family: "Roboto","Helvetica Neue",Arial,sans-serif
   }
 
   .el-aside {
     background-color: #D3DCE6;
     color: #333;
-    /*text-align: center;*/
     line-height: 200px;
   }
 
@@ -129,4 +123,5 @@
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     min-height: calc(100%);
   }
+
 </style>

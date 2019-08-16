@@ -1,47 +1,50 @@
 <template>
   <el-container style="height:100vh;">
-    <el-aside :width="isCollapse?'65px':'250px'">
-      <el-container style="height:100vh;">
-        <el-header style="background-color:#545c64">
+    <!-- --------左侧开始--------- -->
+    <el-aside :width="isCollapse?'65px':'260px'" >
+      <el-container :style="{height:'100vh',backgroundImage:`url(${bgMenu})`}">
+        <!-- --------左侧头部--------- -->
+        <el-header class="fw-bolder" style="background-color:#9970dbCC;border-bottom: 1px solid #DCDFE6;padding: 0px;">
           <el-row>
             <el-col :span="6" style="text-align: left;">
-              <el-image class="img-circle cursor-pointer" @click="collapse()" style="width: 45px; height: 45px;background-color: white;margin-top: 8px;margin-left: 10px;" :src="logoCompany" :fit="'fit'"></el-image>
+              <div class="block cursor-pointer" @click="collapse()"><el-avatar :size="45" :src="logoCompany" style="margin-top: 8px;margin-left: 10px;"></el-avatar></div>
             </el-col>
-            <el-col v-show="!isCollapse" :span="18">企业（系统）名称</el-col>
+            <el-col v-show="!isCollapse" :span="18" class="fs-m">#企业#<span class="fs-xs">（#系统用途#系统）</span></el-col>
           </el-row>
         </el-header>
-        <el-main style="height:calc(100% - 60px);text-align:left;padding: 0px;" >
-          <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse" >
-            <el-submenu index="1">
+        <!-- --------左侧菜单--------- -->
+        <el-main style="height:calc(100% - 60px);text-align:left;padding: 0px;background-color: #00000000;" >
+          <el-menu default-active="1-4-1" class="el-menu-vertical-demo fw-bold" @open="handleOpen" @close="handleClose" :collapse="isCollapse" :unique-opened="true" active-text-color="#76EE00" text-color="#ffffff" style="background-color: #9970dbCC;">
+            <el-menu-item index="1" class="menu-1" style="margin-top: 15px">
+              <i class="el-icon-s-home"></i>
+              <span slot="title">DASHBOARD</span>
+            </el-menu-item>
+
+            <el-submenu index="2" class="menu-1">
               <template slot="title">
                 <i class="el-icon-location"></i>
-                <span slot="title">导航一</span>
+                <span slot="title">目录01</span>
               </template>
-              <el-menu-item-group>
-                <span slot="title">分组一</span>
-                <el-menu-item index="1-1">选项1</el-menu-item>
-                <el-menu-item index="1-2">选项2</el-menu-item>
-              </el-menu-item-group>
-              <el-menu-item-group title="分组2">
-                <el-menu-item index="1-3">选项3</el-menu-item>
-              </el-menu-item-group>
-              <el-submenu index="1-4">
-                <span slot="title">选项4</span>
-                <el-menu-item index="1-4-1">选项1</el-menu-item>
-              </el-submenu>
-              <el-submenu index="1-4">
-                <span slot="title">选项4</span>
-                <el-menu-item index="1-4-1">选项1</el-menu-item>
-              </el-submenu>
-              <el-submenu index="1-4">
-                <span slot="title">选项4</span>
-                <el-menu-item index="1-4-1">选项1</el-menu-item>
+              <el-menu-item index="2-1" class="menu-2">
+                <template slot="title">
+                  <i class="el-icon-location"></i>
+                  <span slot="title">菜单01</span>
+                </template>
+              </el-menu-item>
+              <el-submenu index="2-2"  class="menu-2">
+                <template slot="title">
+                  <i class="el-icon-location"></i>
+                  <span slot="title">菜单02</span>
+                </template>
+                <el-menu-item index="2-2-1" class="menu-3">
+                  <template slot="title">
+                    <i class="el-icon-location"></i>
+                    <span slot="title">菜单01</span>
+                  </template>
+                </el-menu-item>
               </el-submenu>
             </el-submenu>
-            <el-menu-item index="2">
-              <i class="el-icon-menu"></i>
-              <span slot="title">导航二</span>
-            </el-menu-item>
+
             <el-menu-item index="3" disabled>
               <i class="el-icon-document"></i>
               <span slot="title">导航三</span>
@@ -50,13 +53,77 @@
               <i class="el-icon-setting"></i>
               <span slot="title">导航四</span>
             </el-menu-item>
+
+            <el-submenu index="5" class="menu-1">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span slot="title">目录01</span>
+              </template>
+              <el-menu-item index="5-1" class="menu-2">
+                <template slot="title">
+                  <i class="el-icon-location"></i>
+                  <span slot="title">菜单01</span>
+                </template>
+              </el-menu-item>
+              <el-submenu index="5-2"  class="menu-2">
+                <template slot="title">
+                  <i class="el-icon-location"></i>
+                  <span slot="title">菜单02</span>
+                </template>
+                <el-menu-item index="5-2-1" class="menu-3">
+                  <template slot="title">
+                    <i class="el-icon-location"></i>
+                    <span slot="title">菜单01</span>
+                  </template>
+                </el-menu-item>
+              </el-submenu>
+            </el-submenu>
+
+            <el-submenu index="6" class="menu-1">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span slot="title">目录01</span>
+              </template>
+              <el-menu-item index="6-1" class="menu-2">
+                <template slot="title">
+                  <i class="el-icon-location"></i>
+                  <span slot="title">菜单01</span>
+                </template>
+              </el-menu-item>
+              <el-submenu index="6-2"  class="menu-2">
+                <template slot="title">
+                  <i class="el-icon-location"></i>
+                  <span slot="title">菜单02</span>
+                </template>
+                <el-menu-item index="6-2-1" class="menu-3">
+                  <template slot="title">
+                    <i class="el-icon-location"></i>
+                    <span slot="title">菜单01</span>
+                  </template>
+                </el-menu-item>
+              </el-submenu>
+            </el-submenu>
           </el-menu>
         </el-main>
       </el-container>
     </el-aside>
+    <!-- --------右侧部分-------- -->
     <el-container>
-      <el-header style="background-color: gray">Header</el-header>
-      <el-main style="background-color: red;">Main</el-main>
+      <!-- --------右侧头部-------- -->
+      <el-header style="border: 1px solid #e5e5e5;">
+        <el-row>
+          <el-col :span="4" class="fc-black" style="border-bottom: 2px solid blue;">
+            DASHBOARD
+          </el-col>
+          <el-col v-show="!isCollapse" :span="16" class="fs-m">#企业#<span class="fs-xs">（#系统用途#系统）</span></el-col>
+          <el-col :span="1"><i class="el-icon-message-solid fc-gray fs-l cursor-pointer"></i></el-col>
+          <el-col :span="1"><i class="el-icon-s-tools fc-gray fs-l cursor-pointer"></i></el-col>
+          <el-col :span="2"><i class="el-icon-right fc-gray fs-l cursor-pointer"><span class="fs-s">退出</span></i></el-col>
+        </el-row>
+      </el-header>
+      <!-- --------右侧主体-------- -->
+      <el-main style="background-color: #f7f7f8;">Main
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -65,8 +132,9 @@
     name: 'Home',
     data() {
       return {
-        isCollapse: true,
-        logoCompany: require('../assets/logo.png')
+        isCollapse: false,
+        logoCompany: require('../assets/logo.png'),
+        bgMenu: require('../assets/img/bg_menu.jpg')
       };
     },
     methods: {
@@ -86,11 +154,11 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .el-header, .el-footer {
-    background-color: #ffffff;
-    color: #333;
+    color: #FFFFFF;
     text-align: center;
     line-height: 60px;
     padding: 0px;
+    font-family: "Roboto","Helvetica Neue",Arial,sans-serif
   }
 
   .el-aside {
@@ -120,7 +188,10 @@
   }
 
   /*菜单*/
-  .el-menu-vertical-demo:not(.el-menu--collapse) {
+  .el-menu-vertical-demo
+  /*:not(.el-menu--collapse)*/
+  {
     min-height: calc(100%);
   }
+
 </style>
