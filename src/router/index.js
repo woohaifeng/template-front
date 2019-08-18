@@ -3,20 +3,36 @@ import Router from 'vue-router'
 import Test from '@/components/Test'
 import HelloWorld from '@/components/HelloWorld'
 import Home from '@/components/Home'
+import DeptList from '@/components/system/DeptList'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
+      path: '/',
+      name: 'Index',
+      redirect: '/Home'
+    },
+    {
       path: '/Login',
       name: 'HelloWorld',
       component: HelloWorld
     },
     {
-      path: '/',
+      path: '/Home',
       name: 'Home',
-      component: Home
+      component: Home,
+      children: [
+        {
+          path: "Test",
+          component: Test
+        },
+        {
+          path: "DeptList",
+          component: DeptList
+        }
+      ]
     },
     {
       path: '/Test',

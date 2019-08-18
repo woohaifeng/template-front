@@ -87,3 +87,15 @@ border-radius: 50%;
 }
 
 /*--------菜单 END--------*/
+/*--------上下布局--------*/
+.el-search-row {
+  margin-bottom: 10px;
+  &:last-child {
+   margin-bottom: 0;
+ }
+}
+
+.el-divider__text {
+  background-color:#00000000;
+}
+

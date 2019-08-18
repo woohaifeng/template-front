@@ -32,4 +32,8 @@ export default {
   .el-menu {
     background-color: #00000000;
   }
+
+  .el-badge__content.is-fixed {
+    top: 10px;
+  }
 </style>
