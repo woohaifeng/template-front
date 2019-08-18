@@ -167,7 +167,7 @@
       </el-container>
     </el-aside>
     <!-- --------右侧部分-------- -->
-    <el-container>
+    <el-container style="height:100vh;">
       <!-- --------右侧头部-------- -->
       <el-header style="border: 1px solid #e5e5e5;">
         <el-row>
@@ -191,7 +191,7 @@
         </el-row>
       </el-header>
       <!-- --------右侧主体-------- -->
-      <el-main style="background-color: #f7f7f8;padding:10px;">
+      <el-main style="background-color: #f7f7f8;padding:3px 10px;height:calc(100% - 60px);">
         <router-view/>
       </el-main>
     </el-container>
@@ -240,7 +240,7 @@
   .el-main {
     background-color: #E9EEF3;
     color: #333;
-    text-align: center;
+    /*text-align: center;*/
     /*line-height: 160px;*/
   }
 
