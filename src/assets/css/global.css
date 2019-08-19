@@ -89,7 +89,7 @@ border-radius: 50%;
 /*--------菜单 END--------*/
 /*--------上下布局--------*/
 .el-search-row {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   &:last-child {
    margin-bottom: 0;
  }

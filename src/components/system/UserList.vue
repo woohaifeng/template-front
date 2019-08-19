@@ -1,37 +1,43 @@
 <template>
   <div style="height:100%;" class="data-list">
-    <el-row :gutter="20" class="el-search-row">
-      <el-col :span="24">
-        <el-form :inline="true" class="demo-form-inline" style="margin-bottom: 0px;">
+    <el-form :inline="true" class="demo-form-inline" style="margin-bottom: 0px;">
+      <el-row :gutter="20" class="el-search-row">
+        <el-col :span="6">
           <el-form-item label="名称：">
             <el-input type="text" v-model="input" size="mini">
             </el-input>
           </el-form-item>
+        </el-col>
+        <el-col :span="6">
           <el-form-item label="名称：">
             <el-input type="text" v-model="input" size="mini">
             </el-input>
           </el-form-item>
+        </el-col>
+        <el-col :span="6">
           <el-form-item label="名称：">
             <el-input type="text" v-model="input" size="mini">
             </el-input>
           </el-form-item>
-          <el-form-item label="名称：">
-            <el-input type="text" v-model="input" size="mini">
-            </el-input>
-          </el-form-item>
-          <el-form-item label="名称：">
-            <el-input type="text" v-model="input" size="mini">
-            </el-input>
-          </el-form-item>
+        </el-col>
+        <el-col :span="6">
           <el-form-item>
             <el-button-group>
               <el-button type="primary" icon="el-icon-search" size="mini">查询</el-button>
               <el-button type="primary" icon="el-icon-refresh-left" size="mini">重置</el-button>
             </el-button-group>
           </el-form-item>
-        </el-form>
-      </el-col>
-    </el-row>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20" class="el-search-row">
+        <el-col :span="6">
+          <el-form-item label="名称：">
+            <el-input type="text" v-model="input" size="mini">
+            </el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+    </el-form>
     <el-divider content-position="right" style="margin:18px 0;">
       【 部门管理 】
       <el-tooltip class="item" effect="dark" content="创建" placement="bottom-start">
