@@ -89,13 +89,32 @@ border-radius: 50%;
 /*--------菜单 END--------*/
 /*--------上下布局--------*/
 .el-search-row {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   &:last-child {
    margin-bottom: 0;
  }
 }
 
 .el-divider__text {
-  background-color:#00000000;
+  background-color: #f7f7f8;
+}
+
+.el-menu-item, .el-submenu__title {
+  font-size: 12px !important;
+}
+
+.el-search-row .el-form-item {
+  margin-bottom: -5px;
+}
+
+.data-list .el-divider--horizontal {
+  margin:18px 0;
+}
+
+/*-------- 登陆框字体 --------*/
+.login .el-form-item__label {
+  font-size: 20px !important;
+  font-weight: bolder;
+  color: black;
 }
 

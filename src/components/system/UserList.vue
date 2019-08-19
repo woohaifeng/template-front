@@ -29,6 +29,14 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <el-row :gutter="20" class="el-search-row">
+        <el-col :span="6">
+          <el-form-item label="名称：">
+            <el-input type="text" v-model="input" size="mini">
+            </el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
     <el-divider content-position="right" style="margin:18px 0;">
       【 部门管理 】
@@ -119,11 +127,12 @@
   import DeptAdd from './dept/Add.vue';
 
   export default {
-    name: 'DeptList',
+    name: 'UserList',
     components: {DeptAdd},
     data() {
       return {
-        tableHeight: window.innerHeight - 170,
+        // 如果查询条件需要两行，则将表格高度调整为-210
+        tableHeight:window.innerHeight-210,
         dialogTableVisible: false,
         input: "",
         tableData: [

@@ -2,8 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Test from '@/components/Test'
 import HelloWorld from '@/components/HelloWorld'
+import Login from '@/components/Login'
 import Home from '@/components/Home'
 import DeptList from '@/components/system/DeptList'
+import UserList from '@/components/system/UserList'
 
 Vue.use(Router)
 
@@ -16,8 +18,8 @@ export default new Router({
     },
     {
       path: '/Login',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'Login',
+      component: Login
     },
     {
       path: '/Home',
@@ -31,6 +33,10 @@ export default new Router({
         {
           path: "DeptList",
           component: DeptList
+        },
+        {
+          path: "UserList",
+          component: UserList
         }
       ]
     },
