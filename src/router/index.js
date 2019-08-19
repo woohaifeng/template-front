@@ -4,6 +4,7 @@ import Test from '@/components/Test'
 import HelloWorld from '@/components/HelloWorld'
 import Home from '@/components/Home'
 import DeptList from '@/components/system/DeptList'
+import UserList from '@/components/system/UserList'
 
 Vue.use(Router)
 
@@ -31,6 +32,10 @@ export default new Router({
         {
           path: "DeptList",
           component: DeptList
+        },
+        {
+          path: "UserList",
+          component: UserList
         }
       ]
     },

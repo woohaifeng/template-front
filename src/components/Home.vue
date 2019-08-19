@@ -1,17 +1,19 @@
 <template>
   <el-container style="height:100vh;">
     <!-- --------左侧开始--------- -->
-    <el-aside :width="isCollapse?'65px':'260px'">
+    <!-- 调整左侧的宽度 -->
+    <el-aside :width="isCollapse?'65px':'230px'">
       <el-container :style="{height:'100vh',backgroundImage:`url(${bgMenu})`}">
         <!-- --------左侧头部--------- -->
         <el-header class="fw-bolder" style="background-color:#9970dbCC;border-bottom: 1px solid #DCDFE6;padding: 0px;">
+          <!-- -------- LOGO、登陆人 -------- -->
           <el-row>
             <el-col :span="6" style="text-align: left;">
               <div class="block cursor-pointer" @click="collapse()">
                 <el-avatar :size="45" :src="logoCompany" style="margin-top: 8px;margin-left: 10px;"></el-avatar>
               </div>
             </el-col>
-            <el-col v-show="!isCollapse" :span="18" class="fs-m">#企业#<span class="fs-xs">（#系统用途#系统）</span></el-col>
+            <el-col v-show="!isCollapse" :span="18"><i class="el-icon-user-solid fc-black fs-l cursor-pointer"><span class="fs-s"> 欢迎您！马兰花</span></i></el-col>
           </el-row>
         </el-header>
         <!-- --------左侧菜单--------- -->
@@ -41,6 +43,12 @@
                   <i class="el-icon-location"></i>
                   <span slot="title">组织架构</span>
                 </template>
+                <el-menu-item index="/Home/UserList" class="menu-3">
+                  <template slot="title">
+                    <i class="el-icon-location"></i>
+                    <span slot="title">人员管理</span>
+                  </template>
+                </el-menu-item>
                 <el-menu-item index="/Home/DeptList" class="menu-3">
                   <template slot="title">
                     <i class="el-icon-location"></i>
@@ -171,12 +179,10 @@
       <!-- --------右侧头部-------- -->
       <el-header style="border: 1px solid #e5e5e5;">
         <el-row>
-          <el-col :span="16" class="fc-black">
-            DASHBOARD
+          <el-col :span="18" class="fc-black">
+            #企业#<span class="fs-xs">（#系统用途#系统）</span>
           </el-col>
-          <el-col :span="2">
-            <i class="el-icon-user-solid fc-gray fs-l cursor-pointer"><span class="fs-s"> 马兰花</span></i>
-          </el-col>
+
           <el-col :span="2">
             <el-badge :value="200" :max="99" class="badge-item">
               <i class="el-icon-message-solid fc-gray fs-l cursor-pointer"><span class="fs-s"> 通知</span></i>
@@ -191,8 +197,8 @@
         </el-row>
       </el-header>
       <!-- --------右侧主体-------- -->
-      <el-main style="background-color: #f7f7f8;padding:10px;">
-        <router-view/>
+      <el-main style="background-color: #f7f7f8;padding:3px 10px;height:calc(100% - 60px);">
+        <router-view style="height:100%"/>
       </el-main>
     </el-container>
   </el-container>
@@ -240,7 +246,7 @@
   .el-main {
     background-color: #E9EEF3;
     color: #333;
-    text-align: center;
+    /*text-align: center;*/
     /*line-height: 160px;*/
   }
 

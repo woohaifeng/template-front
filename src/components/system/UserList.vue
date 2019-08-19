@@ -15,6 +15,14 @@
             <el-input type="text" v-model="input" size="mini">
             </el-input>
           </el-form-item>
+          <el-form-item label="名称：">
+            <el-input type="text" v-model="input" size="mini">
+            </el-input>
+          </el-form-item>
+          <el-form-item label="名称：">
+            <el-input type="text" v-model="input" size="mini">
+            </el-input>
+          </el-form-item>
           <el-form-item>
             <el-button-group>
               <el-button type="primary" icon="el-icon-search" size="mini">查询</el-button>
@@ -113,11 +121,12 @@
   import DeptAdd from './dept/Add.vue';
 
   export default {
-    name: 'DeptList',
+    name: 'UserList',
     components: {DeptAdd},
     data() {
       return {
-        tableHeight:window.innerHeight-170,
+        // 如果查询条件需要两行，则将表格高度调整为-210
+        tableHeight:window.innerHeight-210,
         dialogTableVisible: false,
         input: "",
         tableData: [
