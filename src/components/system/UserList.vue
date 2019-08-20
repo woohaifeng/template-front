@@ -39,7 +39,7 @@
       </el-row>
     </el-form>
     <el-divider content-position="right" style="margin:18px 0;">
-      【 部门管理 】
+      【 -- 人员管理 -- 】
       <el-tooltip class="item" effect="dark" content="创建" placement="bottom-start">
         <el-button type="success" icon="el-icon-plus" circle size="mini" @click="dialogTableVisible=true;"></el-button>
       </el-tooltip>
@@ -132,7 +132,7 @@
     data() {
       return {
         // 如果查询条件需要两行，则将表格高度调整为-210
-        tableHeight:window.innerHeight-210,
+        tableHeight:window.innerHeight-212,
         dialogTableVisible: false,
         input: "",
         tableData: [

@@ -31,7 +31,7 @@
       </el-row>
     </el-form>
     <el-divider content-position="right" style="margin:18px 0;">
-      【 部门管理 】
+      【 -- 部门管理 -- 】
       <el-tooltip class="item" effect="dark" content="创建" placement="bottom-start">
         <el-button type="success" icon="el-icon-plus" circle size="mini" @click="dialogTableVisible=true;"></el-button>
       </el-tooltip>
@@ -41,10 +41,13 @@
       <el-tooltip class="item" effect="dark" content="导出" placement="bottom-start">
         <el-button type="primary" icon="el-icon-upload2" circle size="mini"></el-button>
       </el-tooltip>
-      <el-tooltip class="item" effect="dark" content="批量删除" placement="bottom-start">
-        <el-button type="danger" icon="el-icon-delete" circle size="mini"></el-button>
+      <el-tooltip class="item" effect="dark" content="删除" placement="bottom-start">-->
+        <el-button v-popover="'del_popover'" type="danger" icon="el-icon-delete" circle size="mini"></el-button>
       </el-tooltip>
     </el-divider>
+    <el-popover placement="top" width="160" ref="del_popover" trigger="click">
+      <popover-confirm text="是否确认删除？"/>
+    </el-popover>
     <el-row>
       <el-table
         :data="tableData"
@@ -99,9 +102,7 @@
     </el-row>
     <el-row style="position: absolute;bottom:0px;right:10px">
       <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage4"
+        :current-page="1"
         :page-sizes="[10, 20, 50, 100]"
         :page-size="10"
         layout="total, sizes, prev, pager, next, jumper"
@@ -117,14 +118,18 @@
 </template>
 <script>
   import DeptAdd from './dept/Add.vue';
+  import PopoverConfirm from '../../template/PopoverConfirm.vue'
 
   export default {
     name: 'DeptList',
-    components: {DeptAdd},
+    components: {DeptAdd, PopoverConfirm},
     data() {
       return {
-        tableHeight: window.innerHeight - 170,
+        //table的高度
+        tableHeight: window.innerHeight - 172,
+        //控制dialog
         dialogTableVisible: false,
+        visible: false,
         input: "",
         tableData: [
 
