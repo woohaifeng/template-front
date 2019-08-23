@@ -1,17 +1,18 @@
-html,body {
+html, body {
   padding: 0px;
   margin: 0px;
 }
 
 .img-circle {
-border-radius: 50%;
+  border-radius: 50%;
 }
 
 /*鼠标样式*/
 /*手*/
 .cursor-pointer {
-  cursor:pointer;
+  cursor: pointer;
 }
+
 /*--------字体--------*/
 /*--------尺寸font-size--------*/
 .fs-xl {
@@ -37,14 +38,17 @@ border-radius: 50%;
 .fs-xxs {
   font-size: 12px;
 }
+
 /*--------尺寸font-size END--------*/
 /*--------颜色color--------*/
 .fc-black {
   color: #000000
 }
+
 .fc-gray {
   color: #999c9e;
 }
+
 /*--------颜色color END--------*/
 /*--------粗细font-weight--------*/
 .fw-bold {
@@ -58,17 +62,21 @@ border-radius: 50%;
 .fw-lighter {
   font-weight: lighter;
 }
+
 /*--------粗细font-weight END--------*/
 /*--------间距letter-spacing--------*/
 .fls-0-1 {
   letter-spacing: 0.1em;
 }
+
 .fls-0-2 {
   letter-spacing: 0.2em;
 }
+
 .fls-0-5 {
   letter-spacing: 0.5em;
 }
+
 /*--------间距letter-spacing End---------*/
 /*--------字体 END--------*/
 /*--------菜单--------*/
@@ -76,12 +84,15 @@ border-radius: 50%;
 .menu-1 {
   background-color: #00000000;
 }
+
 .menu-2 {
   background-color: #00000040;
 }
+
 .menu-3 {
   background-color: #00000080;
 }
+
 .menu-4 {
   background-color: #000000BF;
 }
@@ -90,9 +101,12 @@ border-radius: 50%;
 /*--------上下布局--------*/
 .el-search-row {
   margin-bottom: 5px;
-  &:last-child {
-   margin-bottom: 0;
- }
+
+&
+:last-child {
+  margin-bottom: 0;
+}
+
 }
 
 .el-divider__text {
@@ -108,7 +122,7 @@ border-radius: 50%;
 }
 
 .data-list .el-divider--horizontal {
-  margin:18px 0;
+  margin: 18px 0;
 }
 
 /*-------- 登陆框字体 --------*/
@@ -116,5 +130,27 @@ border-radius: 50%;
   font-size: 20px !important;
   font-weight: bolder;
   color: black;
+}
+
+/*-------- el-popover 背景颜色和箭头背景颜色 --------*/
+.el-popover {
+  background-color: #E6A23C80 !important;
+}
+.popper__arrow::after {
+  border-bottom-color:#E6A23C80 !important;
+}
+
+/*--------table附加--------*/
+.demo-table-expand {
+  font-size: 0;
+}
+.demo-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+.demo-table-expand .el-form-item {
+  margin-right: 0;
+  margin-bottom: 0;
+  width: 50%;
 }
 

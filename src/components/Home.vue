@@ -189,7 +189,7 @@
             </el-badge>
           </el-col>
           <el-col :span="2">
-            <i class="el-icon-phone fc-gray fs-l cursor-pointer"><span class="fs-s"> 通讯录</span></i>
+            <i class="el-icon-phone fc-gray fs-l cursor-pointer" @click="flagDrawerPhone = true"><span class="fs-s"> 通讯录</span></i>
           </el-col>
           <el-col :span="2">
             <i class="el-icon-right fc-gray fs-l cursor-pointer"><span class="fs-s"> 退出</span></i>
@@ -201,14 +201,26 @@
         <router-view style="height:100%"/>
       </el-main>
     </el-container>
+
+    <el-drawer
+      title="通讯录"
+      :visible.sync="flagDrawerPhone"
+      :direction="'rtl'"
+      size="20%">
+      <tree-phone></tree-phone>
+    </el-drawer>
   </el-container>
 </template>
 <script>
+  import TreePhone from './home/TreePhone.vue';
+
   export default {
     name: 'Home',
+    components: {TreePhone},
     data() {
       return {
         isCollapse: false,
+        flagDrawerPhone: false,
         logoCompany: require('../assets/logo.png'),
         bgMenu: require('../assets/img/bg_menu.jpg')
       };
