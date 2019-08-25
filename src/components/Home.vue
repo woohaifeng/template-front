@@ -13,11 +13,12 @@
                 <el-avatar :size="45" :src="logoCompany" style="margin-top: 8px;margin-left: 10px;"></el-avatar>
               </div>
             </el-col>
-            <el-col v-show="!isCollapse" :span="18"><i class="el-icon-user-solid fc-black fs-l cursor-pointer"><span class="fs-s"> 欢迎您！马兰花</span></i></el-col>
+            <el-col v-show="!isCollapse" :span="18"><i class="el-icon-user-solid fc-black fs-l cursor-pointer"><span
+              class="fs-s"> 欢迎您！马兰花</span></i></el-col>
           </el-row>
         </el-header>
         <!-- --------左侧菜单--------- -->
-        <el-main style="height:calc(100% - 60px);text-align:left;padding: 0px;background-color: #00000000;">
+        <el-main id="menu" style="height:calc(100% - 60px);text-align:left;padding: 0px;background-color: #00000000;">
           <el-menu router default-active="1-4-1" class="el-menu-vertical-demo fw-bold" @open="handleOpen"
                    @close="handleClose"
                    :collapse="isCollapse" :unique-opened="true" active-text-color="#76EE00" text-color="#ffffff"
@@ -185,11 +186,12 @@
 
           <el-col :span="2">
             <el-badge :value="200" :max="99" class="badge-item">
-              <i class="el-icon-message-solid fc-gray fs-l cursor-pointer"><span class="fs-s"> 通知</span></i>
+              <i class="el-icon-message-solid fc-gray fs-l cursor-pointer" @click="flagDrawerNotice = true"><span class="fs-s"> 通知</span></i>
             </el-badge>
           </el-col>
           <el-col :span="2">
-            <i class="el-icon-phone fc-gray fs-l cursor-pointer" @click="flagDrawerPhone = true"><span class="fs-s"> 通讯录</span></i>
+            <i class="el-icon-phone fc-gray fs-l cursor-pointer" @click="flagDrawerPhone = true"><span
+              class="fs-s"> 通讯录</span></i>
           </el-col>
           <el-col :span="2">
             <i class="el-icon-right fc-gray fs-l cursor-pointer"><span class="fs-s"> 退出</span></i>
@@ -201,7 +203,15 @@
         <router-view style="height:100%"/>
       </el-main>
     </el-container>
-
+    <!--通知-->
+    <el-drawer
+      title="通知"
+      :visible.sync="flagDrawerNotice"
+      :direction="'rtl'"
+      size="30%">
+      <draw-notice></draw-notice>
+    </el-drawer>
+    <!--通讯录-->
     <el-drawer
       title="通讯录"
       :visible.sync="flagDrawerPhone"
@@ -213,14 +223,16 @@
 </template>
 <script>
   import TreePhone from './home/TreePhone.vue';
+  import DrawNotice from './home/DrawNotice.vue';
 
   export default {
     name: 'Home',
-    components: {TreePhone},
+    components: {TreePhone, DrawNotice},
     data() {
       return {
         isCollapse: false,
         flagDrawerPhone: false,
+        flagDrawerNotice: false,
         logoCompany: require('../assets/logo.png'),
         bgMenu: require('../assets/img/bg_menu.jpg')
       };

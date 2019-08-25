@@ -282,7 +282,10 @@
       del() {
         this.flagLoadingData = true;
         this.del_cancel();
-        this.loadData(this.search);
+        setTimeout(()=>{
+          this.msg_success(this.global.TEXT_DEL_SUCCESS);
+          this.loadData(this.search);
+        },2000);
       },
       del_cancel() {
         this.flagPopoverDelVisible = false;

@@ -136,21 +136,52 @@ html, body {
 .el-popover {
   background-color: #E6A23C80 !important;
 }
+
 .popper__arrow::after {
-  border-bottom-color:#E6A23C80 !important;
+  border-bottom-color: #E6A23C80 !important;
 }
 
 /*--------table附加--------*/
 .demo-table-expand {
   font-size: 0;
 }
+
 .demo-table-expand label {
   width: 90px;
   color: #99a9bf;
 }
+
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
   width: 50%;
+}
+
+/*左侧菜单图标的颜色*/
+#menu .el-submenu__title i,#menu .el-menu-item i {
+  color: #FFFFFF !important;
+}
+/*左侧菜单的高度*/
+.el-menu-item,.el-submenu__title {
+  height:48px !important;
+  line-height: 48px !important;
+  font-size:8px;
+}
+/*菜单悬浮背景色*/
+#menu .el-menu-item:focus,#menu .el-menu-item:hover,#menu .el-submenu__title:focus,#menu .el-submenu__title:hover{
+  background-color: #333333;
+}
+
+.el-menu {
+  background-color: #00000000;
+}
+
+.el-badge__content.is-fixed {
+  top: 10px;
+}
+
+/*抽屉滚动条*/
+.el-drawer__body {
+  overflow: auto;
 }
 
