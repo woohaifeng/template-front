@@ -217,17 +217,17 @@
       :visible.sync="flagDrawerPhone"
       :direction="'rtl'"
       size="20%">
-      <tree-phone></tree-phone>
+      <draw-phone></draw-phone>
     </el-drawer>
   </el-container>
 </template>
 <script>
-  import TreePhone from './home/TreePhone.vue';
+  import DrawPhone from './home/DrawPhone.vue';
   import DrawNotice from './home/DrawNotice.vue';
 
   export default {
     name: 'Home',
-    components: {TreePhone, DrawNotice},
+    components: {DrawPhone, DrawNotice},
     data() {
       return {
         isCollapse: false,

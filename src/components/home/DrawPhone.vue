@@ -106,7 +106,7 @@
 </template>
 <script>
   export default {
-    name: 'TreePhone',
+    name: 'DrawPhone',
     data() {
       return {
         data: [{
