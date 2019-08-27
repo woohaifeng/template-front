@@ -41,6 +41,9 @@ html, body {
 
 /*--------尺寸font-size END--------*/
 /*--------颜色color--------*/
+.fc-white {
+  color: #FFFFFF
+}
 .fc-black {
   color: #000000
 }

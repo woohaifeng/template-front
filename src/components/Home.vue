@@ -13,7 +13,7 @@
                 <el-avatar :size="45" :src="logoCompany" style="margin-top: 8px;margin-left: 10px;"></el-avatar>
               </div>
             </el-col>
-            <el-col v-show="!isCollapse" :span="18"><i class="el-icon-user-solid fc-black fs-l cursor-pointer"><span
+            <el-col v-show="!isCollapse" :span="18"><i class="el-icon-user-solid fc-white fs-l cursor-pointer"><span
               class="fs-s"> 欢迎您！马兰花</span></i></el-col>
           </el-row>
         </el-header>
@@ -208,7 +208,7 @@
       title="通知"
       :visible.sync="flagDrawerNotice"
       :direction="'rtl'"
-      size="30%">
+      size="25%">
       <draw-notice></draw-notice>
     </el-drawer>
     <!--通讯录-->

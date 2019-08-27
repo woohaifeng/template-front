@@ -31,6 +31,9 @@
       </el-row>
     </el-form>
     <el-divider content-position="right" style="margin:18px 0;">
+      <el-tooltip class="item" effect="dark" content="刷新" placement="top-start">
+        <el-button type="success" icon="el-icon-refresh" circle size="mini" @click="loadData(search)"></el-button>
+      </el-tooltip>
       <el-tooltip class="item" effect="dark" content="创建" placement="top-start">
         <el-button type="success" icon="el-icon-plus" circle size="mini" @click="create"></el-button>
       </el-tooltip>
