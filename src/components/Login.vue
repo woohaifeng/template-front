@@ -3,16 +3,17 @@
     <div class="left-screen"></div>
     <div class="right-screen">
 
-      <el-form v-model="loginForm" status-icon :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
-        <el-form-item label="用户名" prop="age">
-          <el-input v-model="loginForm.loginCode" prefix-icon="el-icon-user"></el-input>
+      <el-form :model="loginForm" status-icon :rules="loginRules" ref="loginForm" class="demo-ruleForm"
+               :disabled="flagLogin">
+        <el-form-item prop="loginCode">
+          <el-input v-model="loginForm.loginCode" prefix-icon="el-icon-user" placeholder="账号"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="pass">
-          <el-input type="password" v-model="loginForm.plainPassword" prefix-icon="el-icon-key"></el-input>
+        <el-form-item prop="plainPassword">
+          <el-input type="password" v-model="loginForm.plainPassword" prefix-icon="el-icon-key"
+                    placeholder="密码"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary">提交</el-button>
-          <el-button>重置</el-button>
+          <el-button type="primary" :loading="flagLogin" @click="login">登陆</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -23,20 +24,38 @@
     name: 'Login',
     data() {
       return {
+        flagLogin: false,
         loginForm: {
           loginCode: null,
           plainPassword: null
+        },
+        loginRules: {
+          loginCode: [
+            {required: true, message: '请输入账号', trigger: 'blur'}
+          ],
+          plainPassword: [
+            {required: true, message: '请输入密码', trigger: 'blur'}
+          ]
         }
       };
     },
-    methods: {}
+    methods: {
+      login() {
+        this.$refs['loginForm'].validate((valid) => {
+          if (valid) {
+          } else {
+            return false;
+          }
+        });
+      }
+    }
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .login {
-    font-family: "YouYuan","Yuanti SC",Arial, sans-serif;
+    font-family: "YouYuan", "Yuanti SC", Arial, sans-serif;
   }
 
   .full-screen {
@@ -45,7 +64,7 @@
     width: 100%;
     background-image: url('../assets/img/bg_login.jpg');
     background-repeat: no-repeat;
-    background-size:cover;
+    background-size: cover;
   }
 
   .left-screen {
@@ -65,11 +84,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 5%;
-    box-shadow:4px 4px 20px #000;
+    border-radius: 2%;
+    box-shadow: 4px 4px 20px #000;
   }
 
-  .login input {
-    background-color: #FFFFFF80;
-  }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <el-container style="height:100vh;">
+  <el-container style="height:100vh;" id="home">
     <!-- --------左侧开始--------- -->
     <!-- 调整左侧的宽度 -->
     <el-aside :width="isCollapse?'65px':'230px'">
@@ -185,7 +185,7 @@
           </el-col>
 
           <el-col :span="2">
-            <el-badge :value="200" :max="99" class="badge-item">
+            <el-badge :hidden="countNotify<=0" :value="countNotify" :max="99" class="badge-item">
               <i class="el-icon-message-solid fc-gray fs-l cursor-pointer" @click="flagDrawerNotice = true"><span class="fs-s"> 通知</span></i>
             </el-badge>
           </el-col>
@@ -233,8 +233,10 @@
         isCollapse: false,
         flagDrawerPhone: false,
         flagDrawerNotice: false,
+        countNotify: 0,
         logoCompany: require('../assets/logo.png'),
-        bgMenu: require('../assets/img/bg_menu.jpg')
+        bgMenu: require('../assets/img/bg_menu.jpg'),
+        interval:null,
       };
     },
     methods: {
@@ -247,6 +249,13 @@
       collapse() {
         this.isCollapse = !this.isCollapse;
       }
+    },created() {
+      this.interval = setInterval(() => {
+        this.notify("hahahaha");
+        this.countNotify++;
+      },60000)
+    },destroyed() {
+      clearInterval(this.interval);
     }
   }
 </script>

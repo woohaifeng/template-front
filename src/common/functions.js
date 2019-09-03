@@ -20,6 +20,14 @@ Functions.install = function (Vue, options) {
   Vue.prototype.msg_error = function (text){//全局函数2
     this.$message.error(text);
   };
+  //通知
+  Vue.prototype.notify = function(text) {
+    const h = this.$createElement;
+    this.$notify({
+      title: '通知',
+      message: h('i', { style: 'color: teal'}, text)
+    });
+  }
 
 
 };

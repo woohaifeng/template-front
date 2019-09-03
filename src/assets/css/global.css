@@ -179,12 +179,17 @@ html, body {
   background-color: #00000000;
 }
 
-.el-badge__content.is-fixed {
+#home .el-badge__content.is-fixed {
   top: 10px;
 }
 
 /*抽屉滚动条*/
 .el-drawer__body {
   overflow: auto;
+}
+
+.login .el-input__inner {
+  background-color: #FFFFFF1A !important;
+  color: #FFFFFF;
 }
 

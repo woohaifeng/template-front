@@ -1,36 +1,27 @@
 <template>
   <div style="height:100%;" class="data-list">
-    <el-form :inline="true" class="demo-form-inline" style="margin-bottom: 0px;">
+    <!-- 查询-->
+    <el-form :inline="true" class="demo-form-inline" style="margin-bottom: 0px;" ref="search" :model="search">
       <el-row :gutter="20" class="el-search-row">
         <el-col :span="6">
-          <el-form-item label="名称：">
-            <el-input type="text" v-model="input" size="mini">
-            </el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="名称：">
-            <el-input type="text" v-model="input" size="mini">
-            </el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="名称：">
-            <el-input type="text" v-model="input" size="mini">
+          <el-form-item label="名称：" prop="name">
+            <el-input type="text" v-model="search.name" size="mini">
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :span="6">
           <el-form-item>
             <el-button-group>
-              <el-button type="primary" icon="el-icon-search" size="mini">查询</el-button>
-              <el-button type="primary" icon="el-icon-refresh-left" size="mini">重置</el-button>
+              <el-button type="primary" icon="el-icon-search" size="mini" @click="startSearch()" :loading="flagSearching" :disabled="flagSearching">查询</el-button>
+              <el-button type="primary" icon="el-icon-refresh-left" size="mini" @click="resetSearch()" :disabled="flagSearching">重置</el-button>
             </el-button-group>
           </el-form-item>
         </el-col>
       </el-row>
     </el-form>
+    <!-- 操作 -->
     <el-divider content-position="right" style="margin:18px 0;">
+      <strong>【 部门管理 】</strong>
       <el-tooltip class="item" effect="dark" content="刷新" placement="top-start">
         <el-button type="success" icon="el-icon-refresh" circle size="mini" @click="loadData(search)"></el-button>
       </el-tooltip>
@@ -47,8 +38,8 @@
         <el-button :disabled="multipleSelection.length==0" v-popover="'del_popover'" type="danger" icon="el-icon-delete"
                    circle size="mini"></el-button>
       </el-tooltip>
-      【 部门管理 】
     </el-divider>
+    <!-- 数据 -->
     <el-row v-loading="flagLoadingData" element-loading-background="#0000001A">
       <!--数据列表table-->
       <el-table
@@ -66,11 +57,8 @@
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" class="demo-table-expand">
-              <el-form-item label="地址">
-                <span>{{ props.row.address }}</span>
-              </el-form-item>
-              <el-form-item label="邮编">
-                <span>{{ props.row.zip }}</span>
+              <el-form-item label="描述">
+                <span>{{ props.row.des }}</span>
               </el-form-item>
             </el-form>
           </template>
@@ -79,24 +67,10 @@
           fixed
           type="index">
         </el-table-column>
-        <el-table-column
-          prop="date"
-          label="日期"
-          width="150">
-        </el-table-column>
+        <!-- 如果列数不止一列，可用width="120"属性指定列的宽度 -->
         <el-table-column
           prop="name"
-          label="姓名"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="province"
-          label="省份"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="city"
-          label="市区">
+          label="名称">
         </el-table-column>
         <el-table-column
           fixed="right"
@@ -113,14 +87,18 @@
         </el-table-column>
       </el-table>
     </el-row>
+    <!-- 分页-->
     <el-row style="position: absolute;bottom:0px;right:10px">
       <el-pagination
-        :current-page="1"
+        @size-change="sizeChange"
+        @current-change="currentChange"
+        :current-page="page"
         :page-sizes="[10, 20, 50, 100]"
-        :page-size="10"
+        :page-size="size"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400"
-        :disabled="flagLoadingData">
+        :total="total"
+        :disabled="flagLoadingData"
+        v-show="!flagLoadError">
       </el-pagination>
     </el-row>
     <!--确认删除对话框-->
@@ -139,9 +117,12 @@
         :cancel="add_cancel"
         :adding="flagAddingData"></dept-add>
     </el-dialog>
+    <!--数据加载异常后的提示-->
+    <alert-sys-error :isError="flagLoadError"></alert-sys-error>
   </div>
 </template>
 <script>
+  import https from '../../common/https'
   import DeptAdd from './dept/Add.vue';
 
   export default {
@@ -159,98 +140,61 @@
         flagLoadingData: false,
         //创建中
         flagAddingData: false,
+        //数据加载失败
+        flagLoadError: false,
+        //条件查询
+        flagSearching: false,
 
         input: this.global.TEXT_DEL_CONFIRM,
+        //分页
+        page: 1,
+        size: 10,
+        total: 0,
         //查询条件
-        search: {},
+        search: {
+          name:null
+        },
         form: {},
         tableData: [],
         multipleSelection: []
       };
     },
     methods: {
-      loadData(search) {
+      //加载table数据
+      async loadData(search) {
+        //进度条开启
         if (!this.flagLoadingData) {
           this.flagLoadingData = true;
         }
-        setTimeout(() => {
-          this.tableData = [
-            {
-              date: '2016-05-04',
-              name: '王小虎',
-              province: '上海',
-              city: '普陀区',
-              address: '上海市普陀区金沙江路 1518 弄',
-              zip: 200333
-            },
-            {
-              date: '2016-05-04',
-              name: '王小虎',
-              province: '上海',
-              city: '普陀区',
-              address: '上海市普陀区金沙江路 1518 弄',
-              zip: 200333
-            },
-            {
-              date: '2016-05-04',
-              name: '王小虎',
-              province: '上海',
-              city: '普陀区',
-              address: '上海市普陀区金沙江路 1518 弄',
-              zip: 200333
-            }, {
-              date: '2016-05-01',
-              name: '王小虎',
-              province: '上海',
-              city: '普陀区',
-              address: '上海市普陀区金沙江路 1518 弄',
-              zip: 200333
-            }, {
-              date: '2016-05-01',
-              name: '王小虎',
-              province: '上海',
-              city: '普陀区',
-              address: '上海市普陀区金沙江路 1518 弄',
-              zip: 200333
-            }, {
-              date: '2016-05-01',
-              name: '王小虎',
-              province: '上海',
-              city: '普陀区',
-              address: '上海市普陀区金沙江路 1518 弄',
-              zip: 200333
-            }, {
-              date: '2016-05-01',
-              name: '王小虎',
-              province: '上海',
-              city: '普陀区',
-              address: '上海市普陀区金沙江路 1518 弄',
-              zip: 200333
-            }, {
-              date: '2016-05-01',
-              name: '王小虎',
-              province: '上海',
-              city: '普陀区',
-              address: '上海市普陀区金沙江路 1518 弄',
-              zip: 200333
-            }, {
-              date: '2016-05-01',
-              name: '王小虎',
-              province: '上海',
-              city: '普陀区',
-              address: '上海市普陀区金沙江路 1518 弄',
-              zip: 200333
-            }, {
-              date: '2016-05-08',
-              name: '王小虎',
-              province: '上海',
-              city: '普陀区',
-              address: '上海市普陀区金沙江路 1518 弄',
-              zip: 200333
-            }];
-          this.flagLoadingData = false;
-        }, 2000);
+        await https.get("/dept/list/" + this.page + "/" + this.size, search).then((response) => {
+          //数据加载成功，隐藏加载失败提示
+          if (this.flagLoadError) {
+            this.flagLoadError = false;
+          }
+          //加载成功，填充数据
+          this.tableData = response.data.data;
+          this.total = response.data.cursor.total;
+        }).catch((error) => {
+          //加载失败，数据设置为空
+          this.tableData = [];
+          this.flagLoadError = true;
+        });
+        if(this.flagSearching) {
+          this.flagSearching = false;
+        }
+        //关闭进度条
+        this.flagLoadingData = false;
       },
+      //分页
+      sizeChange(size) {
+        this.size = size;
+        this.loadData(this.search);
+      },
+      currentChange(page) {
+        this.page = page;
+        this.loadData(this.search);
+      },
+      //创建
       create() {
         this.form = {
           name: '',
@@ -282,16 +226,27 @@
       selectionChange(multipleSelection) {
         this.multipleSelection = multipleSelection;
       },
+      //删除
       del() {
         this.flagLoadingData = true;
         this.del_cancel();
-        setTimeout(()=>{
+        setTimeout(() => {
           this.msg_success(this.global.TEXT_DEL_SUCCESS);
           this.loadData(this.search);
-        },2000);
+        }, 2000);
       },
       del_cancel() {
         this.flagPopoverDelVisible = false;
+      },
+      //查询
+      startSearch() {
+        this.flagSearching = true;
+        this.loadData(this.search);
+      },
+      //重置
+      resetSearch() {
+        this.$refs["search"].resetFields();
+        this.startSearch();
       }
     },
     //初始化
