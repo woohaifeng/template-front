@@ -118,11 +118,11 @@
         :adding="flagAddingData"></dept-add>
     </el-dialog>
     <!--数据加载异常后的提示-->
-    <alert-sys-error :isError="flagLoadError"></alert-sys-error>
+    <alert-sys-error :isError="flagLoadError" :text="global.TEXT_SYS_ERROR"></alert-sys-error>
   </div>
 </template>
 <script>
-  import https from '../../common/https'
+  import https from '../../common/https';
   import DeptAdd from './dept/Add.vue';
 
   export default {

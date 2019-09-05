@@ -1,5 +1,10 @@
 <template>
-  <el-container style="height:100vh;" id="home">
+  <el-container
+    style="height:100vh;"
+    id="home"
+    v-loading="flagLogout"
+    :element-loading-text="'系统登出中...'"
+    element-loading-background="rgba(0, 0, 0, 0.2)">
     <!-- --------左侧开始--------- -->
     <!-- 调整左侧的宽度 -->
     <el-aside :width="isCollapse?'65px':'230px'">
@@ -194,7 +199,7 @@
               class="fs-s"> 通讯录</span></i>
           </el-col>
           <el-col :span="2">
-            <i class="el-icon-right fc-gray fs-l cursor-pointer"><span class="fs-s"> 退出</span></i>
+            <i class="el-icon-right fc-gray fs-l cursor-pointer" v-popover="'logout_popover'"><span class="fs-s"> 退出</span></i>
           </el-col>
         </el-row>
       </el-header>
@@ -219,6 +224,14 @@
       size="20%">
       <draw-phone></draw-phone>
     </el-drawer>
+    <!--退出确认-->
+    <!--确认删除对话框-->
+    <el-popover placement="bottom" width="160" ref="logout_popover" trigger="click" v-model="flagPopoverLogoutVisible">
+      <popover-confirm
+        :text="global.TEXT_LOGOUT_CONFIRM"
+        :ok="logout"
+        :cancel="logout_cancel"/>
+    </el-popover>
   </el-container>
 </template>
 <script>
@@ -233,6 +246,10 @@
         isCollapse: false,
         flagDrawerPhone: false,
         flagDrawerNotice: false,
+        //控制退出对话框显示
+        flagPopoverLogoutVisible: false,
+        //正在退出
+        flagLogout: false,
         countNotify: 0,
         logoCompany: require('../assets/logo.png'),
         bgMenu: require('../assets/img/bg_menu.jpg'),
@@ -248,14 +265,34 @@
       },
       collapse() {
         this.isCollapse = !this.isCollapse;
+      },
+      //删除
+      logout() {
+        this.flagLogout =true;
+        this.logout_cancel();
+        setTimeout(()=>{
+          localStorage.removeItem(this.global.TOKEN);
+          this.$router.replace("/Login");
+        },1000);
+      },
+      logout_cancel() {
+        this.flagPopoverLogoutVisible = false;
       }
-    },created() {
+    },
+    beforeCreate() {
+      if(!localStorage.getItem(this.global.TOKEN)){
+        this.$router.replace("/Login");
+      }
+    },
+    created() {
       this.interval = setInterval(() => {
         this.notify("hahahaha");
         this.countNotify++;
       },60000)
     },destroyed() {
-      clearInterval(this.interval);
+      if(this.interval!=null) {
+        clearInterval(this.interval);
+      }
     }
   }
 </script>

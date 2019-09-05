@@ -1,5 +1,5 @@
 <template>
-  <el-alert :title="global.TEXT_SYS_ERROR" type="error" :closable="false" v-show="isError" show-icon></el-alert>
+  <el-alert :title="text" type="error" :closable="false" v-show="isError" show-icon></el-alert>
 </template>
 <script>
   export default {
@@ -9,6 +9,6 @@
       };
     },
     methods: {},
-    props: ['isError']
+    props: ['isError','text']
   }
 </script>

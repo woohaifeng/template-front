@@ -137,11 +137,11 @@ html, body {
 
 /*-------- el-popover 背景颜色和箭头背景颜色 --------*/
 .el-popover {
-  background-color: #E6A23C80 !important;
+  background-color: #E6A23CF2 !important;
 }
 
 .popper__arrow::after {
-  border-bottom-color: #E6A23C80 !important;
+  border-bottom-color: #E6A23CF2 !important;
 }
 
 /*--------table附加--------*/
