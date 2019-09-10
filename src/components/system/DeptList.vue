@@ -22,22 +22,31 @@
     <!-- 操作 -->
     <el-divider content-position="right" style="margin:18px 0;">
       <strong>【 部门管理 】</strong>
-      <el-tooltip class="item" effect="dark" content="刷新" placement="top-start">
-        <el-button type="success" icon="el-icon-refresh" circle size="mini" @click="loadData(search)"></el-button>
-      </el-tooltip>
-      <el-tooltip class="item" effect="dark" content="创建" placement="top-start">
-        <el-button type="success" icon="el-icon-plus" circle size="mini" @click="create"></el-button>
-      </el-tooltip>
-      <el-tooltip class="item" effect="dark" content="导入" placement="top-start">
-        <el-button type="primary" icon="el-icon-download" circle size="mini"></el-button>
-      </el-tooltip>
-      <el-tooltip class="item" effect="dark" content="导出" placement="top-start">
-        <el-button type="primary" icon="el-icon-upload2" circle size="mini"></el-button>
-      </el-tooltip>
-      <el-tooltip class="item" effect="dark" content="删除" placement="top-start">-->
+
+      <el-button-group>
+        <el-button type="success" icon="el-icon-refresh" size="mini" @click="loadData(search)">刷新</el-button>
+        <el-button type="success" icon="el-icon-plus" size="mini" @click="create">创建</el-button>
+        <el-button type="primary" icon="el-icon-download" size="mini">导入</el-button>
+        <el-button type="primary" icon="el-icon-upload2" size="mini">导出</el-button>
         <el-button :disabled="multipleSelection.length==0" v-popover="'del_popover'" type="danger" icon="el-icon-delete"
-                   circle size="mini"></el-button>
-      </el-tooltip>
+                   size="mini">删除</el-button>
+      </el-button-group>
+<!--      <el-tooltip class="item" effect="dark" content="刷新" placement="top-start">-->
+<!--        <el-button type="success" icon="el-icon-refresh" circle size="mini" @click="loadData(search)"></el-button>-->
+<!--      </el-tooltip>-->
+<!--      <el-tooltip class="item" effect="dark" content="创建" placement="top-start">-->
+<!--        <el-button type="success" icon="el-icon-plus" circle size="mini" @click="create"></el-button>-->
+<!--      </el-tooltip>-->
+<!--      <el-tooltip class="item" effect="dark" content="导入" placement="top-start">-->
+<!--        <el-button type="primary" icon="el-icon-download" circle size="mini"></el-button>-->
+<!--      </el-tooltip>-->
+<!--      <el-tooltip class="item" effect="dark" content="导出" placement="top-start">-->
+<!--        <el-button type="primary" icon="el-icon-upload2" circle size="mini"></el-button>-->
+<!--      </el-tooltip>-->
+<!--      <el-tooltip class="item" effect="dark" content="删除" placement="top-start">&ndash;&gt;-->
+<!--        <el-button :disabled="multipleSelection.length==0" v-popover="'del_popover'" type="danger" icon="el-icon-delete"-->
+<!--                   circle size="mini"></el-button>-->
+<!--      </el-tooltip>-->
     </el-divider>
     <!-- 数据 -->
     <el-row v-loading="flagLoadingData" element-loading-background="#0000001A">

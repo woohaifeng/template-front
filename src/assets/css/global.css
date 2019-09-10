@@ -82,23 +82,7 @@ html, body {
 
 /*--------间距letter-spacing End---------*/
 /*--------字体 END--------*/
-/*--------菜单--------*/
-/*--------1级菜单--------*/
-.menu-1 {
-  background-color: #00000000;
-}
 
-.menu-2 {
-  background-color: #00000040;
-}
-
-.menu-3 {
-  background-color: #00000080;
-}
-
-.menu-4 {
-  background-color: #000000BF;
-}
 
 /*--------菜单 END--------*/
 /*--------上下布局--------*/
@@ -160,20 +144,7 @@ html, body {
   width: 50%;
 }
 
-/*左侧菜单图标的颜色*/
-#menu .el-submenu__title i,#menu .el-menu-item i {
-  color: #FFFFFF !important;
-}
-/*左侧菜单的高度*/
-.el-menu-item,.el-submenu__title {
-  height:48px !important;
-  line-height: 48px !important;
-  font-size:8px;
-}
-/*菜单悬浮背景色*/
-#menu .el-menu-item:focus,#menu .el-menu-item:hover,#menu .el-submenu__title:focus,#menu .el-submenu__title:hover{
-  background-color: #333333;
-}
+
 
 .el-menu {
   background-color: #00000000;
@@ -191,5 +162,57 @@ html, body {
 .login .el-input__inner {
   background-color: #FFFFFF1A !important;
   color: #FFFFFF;
+}
+
+/*Home*/
+/*左侧背景颜色*/
+.home-left-bg {
+  /*background-color: #9970dbCC;*/
+  background-color: #6EA7E4CC;
+}
+/*menu的颜色*/
+/*.home-left-menu-color {*/
+/*  color:#1A091A;*/
+/*}*/
+
+/*左侧菜单图标的颜色*/
+#menu .el-submenu__title i,#menu .el-menu-item i {
+  color:#1A091A;
+}
+.el-menu-item.is-active i {
+  color: inherit !important;
+}
+  /*左侧菜单的高度*/
+.el-menu-item,.el-submenu__title {
+  height:48px !important;
+  line-height: 48px !important;
+  font-size:8px;
+}
+/*菜单悬浮背景色*/
+#menu .el-menu-item:focus,#menu .el-menu-item:hover,#menu .el-submenu__title:focus,#menu .el-submenu__title:hover{
+  background-color: #FFFFFF;
+}
+/*--------1级菜单--------*/
+.menu-1 {
+  background-color: #00000000;
+  border-bottom: 1px solid #0000000D;
+}
+
+.menu-2 {
+  /*background-color: #00000040;*/
+  background-color: #0000001A;
+}
+
+.menu-3 {
+  /*background-color: #00000080;*/
+  background-color: #00000033;
+}
+
+.menu-4 {
+  background-color: #000000BF;
+}
+
+.el-tooltip__popper.is-dark {
+  background: darkgrey !important;
 }
 

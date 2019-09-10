@@ -12,6 +12,9 @@ const TEXT_SYS_ERROR = "服务异常，请重新刷新或联系系统管理员�
 
 const TEXT_LOGIN_ERROR_DEFAULT = "登陆失败！"
 
+const TEXT_SYS_INIT = "系统初始化中..."
+const TEXT_SYS_LOGOUT = "系统登出中..."
+
 const TOKEN = "token"
 
 export default {
@@ -24,5 +27,7 @@ export default {
   TEXT_LOGOUT_CONFIRM,
   TEXT_SYS_ERROR,
   TEXT_LOGIN_ERROR_DEFAULT,
+  TEXT_SYS_INIT,
+  TEXT_SYS_LOGOUT,
   TOKEN
 }

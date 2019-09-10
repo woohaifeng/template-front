@@ -2,15 +2,16 @@
   <el-container
     style="height:100vh;"
     id="home"
-    v-loading="flagLogout"
-    :element-loading-text="'系统登出中...'"
-    element-loading-background="rgba(0, 0, 0, 0.2)">
+    v-loading="flagLogout || flagIniting"
+    :element-loading-text="textSysLoading"
+    element-loading-background="rgba(0, 0, 0, 0.2)"
+    class="template-home">
     <!-- --------左侧开始--------- -->
     <!-- 调整左侧的宽度 -->
     <el-aside :width="isCollapse?'65px':'230px'">
       <el-container :style="{height:'100vh',backgroundImage:`url(${bgMenu})`}">
         <!-- --------左侧头部--------- -->
-        <el-header class="fw-bolder" style="background-color:#9970dbCC;border-bottom: 1px solid #DCDFE6;padding: 0px;">
+        <el-header class="fw-bolder home-left-bg" style="border-bottom: 1px solid #DCDFE6;padding: 0px;">
           <!-- -------- LOGO、登陆人 -------- -->
           <el-row>
             <el-col :span="6" style="text-align: left;">
@@ -24,159 +25,7 @@
         </el-header>
         <!-- --------左侧菜单--------- -->
         <el-main id="menu" style="height:calc(100% - 60px);text-align:left;padding: 0px;background-color: #00000000;">
-          <el-menu router default-active="1-4-1" class="el-menu-vertical-demo fw-bold" @open="handleOpen"
-                   @close="handleClose"
-                   :collapse="isCollapse" :unique-opened="true" active-text-color="#76EE00" text-color="#ffffff"
-                   style="background-color: #9970dbCC;">
-            <el-menu-item index="/Test" class="menu-1" style="margin-top: 15px">
-              <i class="el-icon-s-home"></i>
-              <span slot="title">DASHBOARD</span>
-            </el-menu-item>
-
-            <el-submenu index="2" class="menu-1">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span slot="title">系统管理</span>
-              </template>
-              <el-menu-item index="/Home/Test" class="menu-2">
-                <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span slot="title">Test</span>
-                </template>
-              </el-menu-item>
-              <el-submenu index="2-2" class="menu-2">
-                <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span slot="title">组织架构</span>
-                </template>
-                <el-menu-item index="/Home/UserList" class="menu-3">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span slot="title">人员管理</span>
-                  </template>
-                </el-menu-item>
-                <el-menu-item index="/Home/DeptList" class="menu-3">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span slot="title">部门管理</span>
-                  </template>
-                </el-menu-item>
-              </el-submenu>
-            </el-submenu>
-
-            <el-menu-item index="3" disabled>
-              <i class="el-icon-document"></i>
-              <span slot="title">导航三</span>
-            </el-menu-item>
-            <el-menu-item index="4">
-              <i class="el-icon-setting"></i>
-              <span slot="title">导航四</span>
-            </el-menu-item>
-
-            <el-submenu index="5" class="menu-1">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span slot="title">目录01</span>
-              </template>
-              <el-menu-item index="5-1" class="menu-2">
-                <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span slot="title">菜单01</span>
-                </template>
-              </el-menu-item>
-              <el-submenu index="5-2" class="menu-2">
-                <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span slot="title">菜单02</span>
-                </template>
-                <el-menu-item index="5-2-1" class="menu-3">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span slot="title">菜单01</span>
-                  </template>
-                </el-menu-item>
-              </el-submenu>
-            </el-submenu>
-
-            <el-submenu index="6" class="menu-1">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span slot="title">目录01</span>
-              </template>
-              <el-menu-item index="6-1" class="menu-2">
-                <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span slot="title">菜单01</span>
-                </template>
-              </el-menu-item>
-              <el-submenu index="6-2" class="menu-2">
-                <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span slot="title">菜单02</span>
-                </template>
-                <el-menu-item index="6-2-1" class="menu-3">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span slot="title">菜单01</span>
-                  </template>
-                </el-menu-item>
-                <el-menu-item index="6-2-1" class="menu-3">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span slot="title">菜单01</span>
-                  </template>
-                </el-menu-item>
-                <el-menu-item index="6-2-1" class="menu-3">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span slot="title">菜单01</span>
-                  </template>
-                </el-menu-item>
-                <el-menu-item index="6-2-1" class="menu-3">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span slot="title">菜单01</span>
-                  </template>
-                </el-menu-item>
-                <el-menu-item index="6-2-1" class="menu-3">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span slot="title">菜单01</span>
-                  </template>
-                </el-menu-item>
-                <el-menu-item index="6-2-1" class="menu-3">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span slot="title">菜单01</span>
-                  </template>
-                </el-menu-item>
-                <el-menu-item index="6-2-1" class="menu-3">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span slot="title">菜单01</span>
-                  </template>
-                </el-menu-item>
-                <el-menu-item index="6-2-1" class="menu-3">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span slot="title">菜单01</span>
-                  </template>
-                </el-menu-item>
-                <el-menu-item index="6-2-1" class="menu-3">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span slot="title">菜单01</span>
-                  </template>
-                </el-menu-item>
-                <el-menu-item index="6-2-1" class="menu-3">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span slot="title">菜单01</span>
-                  </template>
-                </el-menu-item>
-              </el-submenu>
-            </el-submenu>
-          </el-menu>
+          <menu-left :handleOpen="handleOpen" :handleClose="handleClose" :isCollapse="isCollapse" :menus="menus"></menu-left>
         </el-main>
       </el-container>
     </el-aside>
@@ -191,7 +40,8 @@
 
           <el-col :span="2">
             <el-badge :hidden="countNotify<=0" :value="countNotify" :max="99" class="badge-item">
-              <i class="el-icon-message-solid fc-gray fs-l cursor-pointer" @click="flagDrawerNotice = true"><span class="fs-s"> 通知</span></i>
+              <i class="el-icon-message-solid fc-gray fs-l cursor-pointer" @click="flagDrawerNotice = true"><span
+                class="fs-s"> 通知</span></i>
             </el-badge>
           </el-col>
           <el-col :span="2">
@@ -199,7 +49,8 @@
               class="fs-s"> 通讯录</span></i>
           </el-col>
           <el-col :span="2">
-            <i class="el-icon-right fc-gray fs-l cursor-pointer" v-popover="'logout_popover'"><span class="fs-s"> 退出</span></i>
+            <i class="el-icon-right fc-gray fs-l cursor-pointer" v-popover="'logout_popover'"><span
+              class="fs-s"> 退出</span></i>
           </el-col>
         </el-row>
       </el-header>
@@ -235,12 +86,14 @@
   </el-container>
 </template>
 <script>
-  import DrawPhone from './home/DrawPhone.vue';
-  import DrawNotice from './home/DrawNotice.vue';
+  import https from '../common/https';
+  import DrawPhone from './home/DrawPhone';
+  import DrawNotice from './home/DrawNotice';
+  import MenuLeft from "./home/MenuLeft";
 
   export default {
     name: 'Home',
-    components: {DrawPhone, DrawNotice},
+    components: {MenuLeft, DrawPhone, DrawNotice},
     data() {
       return {
         isCollapse: false,
@@ -248,12 +101,16 @@
         flagDrawerNotice: false,
         //控制退出对话框显示
         flagPopoverLogoutVisible: false,
+        //初始化
+        flagIniting:true,
         //正在退出
         flagLogout: false,
+        textSysLoading: null,
         countNotify: 0,
+        menus: null,
         logoCompany: require('../assets/logo.png'),
         bgMenu: require('../assets/img/bg_menu.jpg'),
-        interval:null,
+        interval: null,
       };
     },
     methods: {
@@ -266,31 +123,44 @@
       collapse() {
         this.isCollapse = !this.isCollapse;
       },
+      //初始化
+      async init() {
+        this.textSysLoading = this.global.TEXT_SYS_INIT;
+        this.flagIniting = true;
+        await https.post("/home/init/", {}).then((response) => {
+          this.menus = response.data.data.menus;
+        }).catch((error) => {
+        });
+        this.flagIniting = false;
+      },
       //删除
       logout() {
-        this.flagLogout =true;
+        this.textSysLoading = this.global.TEXT_SYS_LOGOUT;
+        this.flagLogout = true;
         this.logout_cancel();
-        setTimeout(()=>{
+        setTimeout(() => {
           localStorage.removeItem(this.global.TOKEN);
           this.$router.replace("/Login");
-        },1000);
+        }, 1000);
       },
       logout_cancel() {
         this.flagPopoverLogoutVisible = false;
       }
     },
     beforeCreate() {
-      if(!localStorage.getItem(this.global.TOKEN)){
+      if (!localStorage.getItem(this.global.TOKEN)) {
         this.$router.replace("/Login");
       }
     },
     created() {
+      this.init();
       this.interval = setInterval(() => {
         this.notify("hahahaha");
         this.countNotify++;
-      },60000)
-    },destroyed() {
-      if(this.interval!=null) {
+      }, 60000)
+    },
+    destroyed() {
+      if (this.interval != null) {
         clearInterval(this.interval);
       }
     }
