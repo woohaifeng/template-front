@@ -31,22 +31,6 @@
         <el-button :disabled="multipleSelection.length==0" v-popover="'del_popover'" type="danger" icon="el-icon-delete"
                    size="mini">删除</el-button>
       </el-button-group>
-<!--      <el-tooltip class="item" effect="dark" content="刷新" placement="top-start">-->
-<!--        <el-button type="success" icon="el-icon-refresh" circle size="mini" @click="loadData(search)"></el-button>-->
-<!--      </el-tooltip>-->
-<!--      <el-tooltip class="item" effect="dark" content="创建" placement="top-start">-->
-<!--        <el-button type="success" icon="el-icon-plus" circle size="mini" @click="create"></el-button>-->
-<!--      </el-tooltip>-->
-<!--      <el-tooltip class="item" effect="dark" content="导入" placement="top-start">-->
-<!--        <el-button type="primary" icon="el-icon-download" circle size="mini"></el-button>-->
-<!--      </el-tooltip>-->
-<!--      <el-tooltip class="item" effect="dark" content="导出" placement="top-start">-->
-<!--        <el-button type="primary" icon="el-icon-upload2" circle size="mini"></el-button>-->
-<!--      </el-tooltip>-->
-<!--      <el-tooltip class="item" effect="dark" content="删除" placement="top-start">&ndash;&gt;-->
-<!--        <el-button :disabled="multipleSelection.length==0" v-popover="'del_popover'" type="danger" icon="el-icon-delete"-->
-<!--                   circle size="mini"></el-button>-->
-<!--      </el-tooltip>-->
     </el-divider>
     <!-- 数据 -->
     <el-row v-loading="flagLoadingData" element-loading-background="#0000001A">
@@ -205,17 +189,11 @@
       },
       //创建
       create() {
+        this.flagDialogCreateVisible = true;
         this.form = {
           name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
           desc: ''
         };
-        this.flagDialogCreateVisible = true;
       },
       add() {
         this.flagAddingData = true;

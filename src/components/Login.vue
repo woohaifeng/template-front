@@ -70,7 +70,7 @@
                 var token = response.data.data;
                 if(token) {
                   localStorage.setItem(this.global.TOKEN,token);
-                  this.$router.replace("/Home")
+                  this.$router.replace("/Home/Dashboard")
                 }
               }
               //登陆失败
