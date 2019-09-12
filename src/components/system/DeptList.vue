@@ -106,9 +106,8 @@
                top="8vh" width="60%" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
       <dept-add
         :form="form"
-        :ok="add"
-        :cancel="add_cancel"
-        :adding="flagAddingData"></dept-add>
+        :ok="add_ok"
+        :cancel="add_cancel"></dept-add>
     </el-dialog>
     <!--数据加载异常后的提示-->
     <alert-sys-error :isError="flagLoadError" :text="global.TEXT_SYS_ERROR"></alert-sys-error>
@@ -149,7 +148,8 @@
         },
         form: {},
         tableData: [],
-        multipleSelection: []
+        multipleSelection: [],
+        temp: {}
       };
     },
     methods: {
@@ -192,22 +192,16 @@
         this.flagDialogCreateVisible = true;
         this.form = {
           name: '',
-          desc: ''
+          des: ''
         };
+        this.temp.flagDialogCreateVisible = this.flagDialogCreateVisible;
       },
-      add() {
-        this.flagAddingData = true;
-        setTimeout(() => {
-          this.add_cancel();
-          this.msg_success(this.global.TEXT_ADD_SUCCESS);
-          this.loadData(this.search);
-        }, 2000);
+      add_ok() {
+        this.add_cancel();
+        this.loadData(this.search);
       },
       add_cancel() {
         this.flagDialogCreateVisible = false;
-        if (this.flagAddingData) {
-          this.flagAddingData = false;
-        }
       },
       //选择，手动（this.$refs.multipleTable.toggleRowSelection(row);this.$refs.multipleTable.clearSelection();）
       selectionChange(multipleSelection) {
@@ -216,7 +210,20 @@
       //删除
       del() {
         this.flagLoadingData = true;
+        var ids = [];
+        this.multipleSelection.forEach((selection,index) => {
+          ids.push(selection.id);
+        });
         this.del_cancel();
+        https.del("/dept/deletes",{ids:ids}).then((response)=>{
+          if(response.data.status === 200) {
+            this.msg_success(this.global.TEXT_DEL_SUCCESS);
+          } else {
+            this.msg_error(this.global.TEXT_DEL_FAILED);
+          }
+        }).catch((error)=>{
+
+        });
         setTimeout(() => {
           this.msg_success(this.global.TEXT_DEL_SUCCESS);
           this.loadData(this.search);

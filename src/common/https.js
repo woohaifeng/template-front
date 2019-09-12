@@ -12,9 +12,9 @@ Axios.interceptors.request.use((config) => {
     config.headers.common['token'] = localStorage.getItem(Vue.prototype.global.TOKEN);
   };
   //在发送请求之前做某件事
-  if (config.method === 'post') {
-    config.data = QS.stringify(config.data);
-  }
+  // if (config.method === 'post') {
+  //   config.data = QS.stringify(config.data);
+  // }
   return config;
 }, (error) => {
   // 可能出现错误的参数
@@ -62,7 +62,24 @@ export function get(url, param) {
   })
 }
 
+export function del(url,param) {
+  return new Promise((resolve, reject) => {
+    Axios.delete(url, {params: param,paramsSerializer: params => {
+        return QS.stringify(params, { indices: false })
+      }})
+      .then(response => {
+        resolve(response)
+      }, err => {
+        reject(err)
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })
+}
+
 export default {
   post,
   get,
+  del
 }
