@@ -193,7 +193,7 @@
       append-to-body>
       <radio-table-height :tableData="heights" :back="form" :cancel="chooseHeightCancel"/>
     </el-dialog>
-    <!--多选-->
+    <!-- 【多选，Dialog】 -->
     <el-dialog
       width="60%"
       top="10vh"
@@ -204,7 +204,7 @@
                              :flagLoading="flagInnerChooseRelationsLoading" :back="form"
                              :cancel="chooseRelationsCancel" :condition="relationCondition" :flagRemember="flagInnerChooseRelationsRemember"/>
     </el-dialog>
-    <!-- template end -->
+    <!-- 【END】 -->
   </div>
 </template>
 <script>
@@ -220,20 +220,29 @@
         flagReadOnly: false,
         //确认框
         flagPopoverAddVisible: false,
-        //innerVisible
+        // 【单选，Dialog】
         flagInnerChooseHeight: false,
-        // 多选
+        // 【END】
+
+        // 【多选，Dialog】
+        // 显示Dialog
         flagInnerChooseRelations: false,
+        // 数据加载中
         flagInnerChooseRelationsLoading: false,
+        // 选中记忆功能
         flagInnerChooseRelationsRemember: false,
+        // 数据存放
         relations: [],
+        // 数据查询条件
         relationCondition: {
           search: {},
           page: 1,
           size: 10,
           total: 0
         },
-        // ######## 表单验证规则
+        // 【END】
+
+        // 【表单验证规则】
         rules: {
           name: [
             this.formRequiredOnChange("请输入名称"),
@@ -279,6 +288,8 @@
             this.formRequiredOnChange('请输入时间')
           ]
         },
+        // 【END】
+
         /*template*/
         heights: []
         /*template end*/
@@ -343,21 +354,33 @@
       chooseHeightCancel() {
         this.flagInnerChooseHeight = false;
       },
-      // ######## 多选
+      // 【 --##--##--##--##--##--##--##--## 多选 --##--##--##--##--##--##--##--## 】
+      // 【 ---- 打开Dialog的方法 <chooseRelations> ---- 】
       chooseRelations() {
+        // 【 ---- 打开标志 <flagInnerChooseRelations> ---- 】
         this.flagInnerChooseRelations = true;
+        // 【 ---- 初始化数据为空，等待初始化 <relations> ---- 】
         this.relations = [];
+        // 【 ---- 开始加载数据 <loadRelations>（条件 <relationCondition>、false） ---- 】
         this.loadRelations(this.relationCondition,false);
       },
+      // 【 ---- 关闭Dialog的方法 <chooseRelationsCancel> ---- 】
       chooseRelationsCancel() {
+        // 【 ---- <flagInnerChooseRelations> ---- 】
         this.flagInnerChooseRelations = false;
       },
+      // 【 ---- 删除一条已选数据 <deleteRelations> ---- 】
       deleteRelations(index) {
+        // 【 ---- <relations> ---- 】
         this.form.relations.splice(index,1);
       },
+      // 【 ---- <loadRelations> ---- 】
       loadRelations(condition,remember) {
+        // 【 ---- <flagInnerChooseRelationsRemember> ---- 】
         this.flagInnerChooseRelationsRemember = remember;
+        // 【 ---- <flagInnerChooseRelationsLoading> ---- 】
         this.flagInnerChooseRelationsLoading = true;
+        // ######## 数据开始加载，加载结束后关闭加载开始标志
         setTimeout(() => {
           if (this.relationCondition.page == 1) {
             this.relations = [
@@ -381,10 +404,12 @@
             ];
           }
           this.relationCondition.total = 14;
+          // 【 ---- <flagInnerChooseRelationsLoading> ---- 】
           this.flagInnerChooseRelationsLoading = false;
-        }, 200);
+        }, 1000);
       },
-      // ######## 多选 END
+      // 【 --##--##--##--##--##--##--##--## 多选 END --##--##--##--##--##--##--##--## 】
+
       //开始提交，并验证表单的合法性，打开确认框
       submitForm() {
         this.$refs["form"].validate((valid) => {
