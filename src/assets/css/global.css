@@ -13,6 +13,10 @@ html, body {
   cursor: pointer;
 }
 
+.cursor-pointer .el-input__inner {
+  cursor: pointer;
+}
+
 /*--------字体--------*/
 /*--------尺寸font-size--------*/
 .fs-xl {
@@ -120,13 +124,39 @@ html, body {
 }
 
 /*-------- el-popover 背景颜色和箭头背景颜色 --------*/
+/*.el-popover {*/
+/*  background-color: #E6A23CF2 !important;*/
+/*}*/
+
 .el-popover {
-  background-color: #E6A23CF2 !important;
+  box-shadow: 2px 2px 5px #888888 !important;
+  border: 1px solid black !important;
 }
 
-.popper__arrow::after {
-  border-bottom-color: #E6A23CF2 !important;
+.el-popper[x-placement^=bottom] .popper__arrow {
+  border-bottom-color: black;
 }
+/*.el-popper[x-placement^=bottom] .popper__arrow::after {*/
+/*  border-bottom-color: #E6A23CF2 !important;*/
+/*}*/
+.el-popper[x-placement^=top] .popper__arrow {
+  border-top-color: black;
+}
+/*.el-popper[x-placement^=top] .popper__arrow::after {*/
+/*  border-top-color: #E6A23CF2 !important;*/
+/*}*/
+.el-popper[x-placement^=left] .popper__arrow {
+  border-left-color: black;
+}
+/*.el-popper[x-placement^=left] .popper__arrow::after {*/
+/*  border-left-color: #E6A23CF2 !important;*/
+/*}*/
+.el-popper[x-placement^=right] .popper__arrow {
+  border-right-color: black;
+}
+/*.el-popper[x-placement^=right] .popper__arrow::after {*/
+/*  border-right-color: #E6A23CF2 !important;*/
+/*}*/
 
 /*--------table附加--------*/
 .demo-table-expand {
@@ -218,5 +248,12 @@ html, body {
 
 .el-tooltip__popper.is-dark {
   background: darkgrey !important;
+}
+
+/*输入框、文本框*/
+/*只读时字体颜色，边框*/
+.el-input.is-disabled .el-input__inner,.el-textarea.is-disabled .el-textarea__inner{
+  color: #409eff;
+  border-color: transparent;
 }
 

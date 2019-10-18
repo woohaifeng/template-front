@@ -1,6 +1,8 @@
 # template-vue
 
-> NULL
+> index.html中修改系统图标、标题
+> config/index.js中修改host、port
+> config/index.js中修改proxyTable中访问后台的地址
 
 ## Build Setup
 

@@ -31,12 +31,37 @@ Axios.interceptors.response.use((response) => {
   }
   return response;
 }, (error) => {
+  if(error.response.status) {
+    switch (error.response.status) {
+      case 401:
+        localStorage.removeItem(Vue.prototype.global.TOKEN);
+        router.replace({path: "/Login"});
+        break;
+      default:
+        // Vue.prototype.msg_error(Vue.prototype.global.TEXT_SYS_EXCEPTION);
+        break;
+    }
+  }
   return Promise.reject(error.response.data);
 });
 
 export function post(url, params) {
   return new Promise((resolve, reject) => {
     Axios.post(url, params)
+      .then(response => {
+        resolve(response);
+      }, err => {
+        reject(err);
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })
+}
+
+export function put(url, params) {
+  return new Promise((resolve, reject) => {
+    Axios.put(url, params)
       .then(response => {
         resolve(response);
       }, err => {
@@ -80,6 +105,7 @@ export function del(url,param) {
 
 export default {
   post,
+  put,
   get,
   del
 }

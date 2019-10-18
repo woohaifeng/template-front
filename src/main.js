@@ -13,15 +13,18 @@ Vue.use(Templates)
 //公用变量
 import Global from './common/global'
 Vue.prototype.global = Global
+//URLS
+import Urls from './common/urls'
+Vue.prototype.urls = Urls
 //公用方法
 import Functions from './common/functions'
 Vue.use(Functions)
-//Axios
-// import Axios from 'axios';
-// import VueAxios from 'vue-axios'
-// import QS from 'qs'
-// Vue.use(VueAxios,Axios)
-// Vue.prototype.QS = QS;
+//富文本cnpm install vue-quill-editor --save
+import VueQuillEditor  from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+Vue.use(VueQuillEditor,Vue.prototype.global.EDITOR_OPTIONS)
 
 Vue.config.productionTip = false
 

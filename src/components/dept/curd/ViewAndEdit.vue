@@ -1,29 +1,29 @@
 <template>
-  <el-form ref="form" :model="form" :rules="rules" label-width="80px" :disabled="flagAdding">
+  <el-form ref="form" :model="form" :rules="rules" label-width="80px" :disabled="flagIniting || flagSaveing">
     <el-row>
       <el-col :span="12">
         <el-form-item label="部门名称" prop="name">
-          <el-input v-model.trim="form.name" placeholder="2-16个字符"></el-input>
+          <el-input v-model.trim="form.name" :placeholder="type||flagIniting||!flagInitSuccess?'':'2-16个字符'" :disabled="type||!flagInitSuccess"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
       <el-form-item label="部门描述">
-        <el-input type="textarea" v-model="form.des" :autosize="{ minRows: 3, maxRows: 3}"></el-input>
+        <el-input type="textarea" v-model="form.des" :disabled="type  ||!flagInitSuccess" :autosize="{ minRows: 3, maxRows: 3}"></el-input>
       </el-form-item>
     </el-row>
     <el-row>
       <el-form-item>
-        <el-button type="primary" @click="submitForm" :loading="flagAdding">创建</el-button>
-        <el-button @click="cancelForm">取消</el-button>
+        <el-button type="primary" @click="submitForm" :loading="flagSaveing" v-if="!type" :disabled="!flagInitSuccess">保存</el-button>
+        <el-button @click="cancelForm" :loading="flagIniting">{{flagIniting?'数据加载中':'关闭'}}</el-button>
       </el-form-item>
     </el-row>
     <!--确认创建对话框-->
-    <el-popover placement="bottom" width="160" ref="add_popover" trigger="click" v-model="flagPopoverAddVisible">
+    <el-popover placement="bottom" width="160" ref="save_popover" trigger="click" v-model="flagPopoverSaveVisible">
       <popover-confirm
         :text="global.TEXT_ADD_CONFIRM"
-        :ok="add_confirm"
-        :cancel="add_not_confirm"/>
+        :ok="save_confirm"
+        :cancel="save_not_confirm"/>
     </el-popover>
   </el-form>
 </template>
@@ -31,13 +31,13 @@
   import https from '../../../common/https';
 
   export default {
-    name: 'DeptList',
+    name: 'DeptViewAndEdit',
     data() {
       return {
         //正在添加中
-        flagAdding: false,
+        flagSaveing: false,
         //确认框
-        flagPopoverAddVisible: false,
+        flagPopoverSaveVisible: false,
         //表单验证规则
         rules: {
           name: [
@@ -52,7 +52,7 @@
       submitForm() {
         this.$refs["form"].validate((valid) => {
           if (valid) {
-            this.flagPopoverAddVisible = true;
+            this.flagPopoverSaveVisible = true;
           } else {
             return false;
           }
@@ -62,29 +62,29 @@
         this.cancel();
       },
       //确认框确认
-      async add_confirm() {
+      async save_confirm() {
         //将表单按钮的数据设为不可用disabled状态
-        this.flagAdding = true;
+        this.flagSaveing = true;
         //关闭确认框
-        this.add_not_confirm();
+        this.save_not_confirm();
         /*--------这里填写提交逻辑--------*/
-        await https.post("/dept/add", this.form).then((response) => {
+        await https.put("/dept/save", this.form).then((response) => {
           if(response.data.status === 200) {
-            this.msg_success(this.global.TEXT_ADD_SUCCESS);
+            this.msg_success(this.global.TEXT_SAVE_SUCCESS);
             //回调函数
             this.ok();
           } else {
-            this.msg_error(this.global.TEXT_ADD_FAILED);
+            this.msg_error(this.global.TEXT_SAVE_FAILED);
           }
         }).catch((error) => {
-          this.msg_error(this.global.TEXT_ADD_FAILED);
+          this.msg_error(this.global.TEXT_SAVE_FAILED);
         });
-        this.flagAdding = false;
+        this.flagSaveing = false;
       },
-      add_not_confirm() {
-        this.flagPopoverAddVisible = false;
+      save_not_confirm() {
+        this.flagPopoverSaveVisible = false;
       }
     },
-    props: ['form', 'ok', 'cancel']
+    props: ['form', 'ok', 'cancel','flagIniting','flagInitSuccess','type']
   }
 </script>
