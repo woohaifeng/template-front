@@ -10,7 +10,8 @@ Axios.interceptors.request.use((config) => {
   //在请求头中添加token验证信息
   if (config.url != '/outh/login') {
     config.headers.common['token'] = localStorage.getItem(Vue.prototype.global.TOKEN);
-  };
+  }
+  ;
   //在发送请求之前做某件事
   // if (config.method === 'post') {
   //   config.data = QS.stringify(config.data);
@@ -31,7 +32,7 @@ Axios.interceptors.response.use((response) => {
   }
   return response;
 }, (error) => {
-  if(error.response.status) {
+  if (error.response.status) {
     switch (error.response.status) {
       case 401:
         localStorage.removeItem(Vue.prototype.global.TOKEN);
@@ -48,6 +49,20 @@ Axios.interceptors.response.use((response) => {
 export function post(url, params) {
   return new Promise((resolve, reject) => {
     Axios.post(url, params)
+      .then(response => {
+        resolve(response);
+      }, err => {
+        reject(err);
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })
+}
+
+export function postFile(url, params) {
+  return new Promise((resolve, reject) => {
+    Axios.post(url, params, {headers: {'Content-Type': 'multipart/form-data'}})
       .then(response => {
         resolve(response);
       }, err => {
@@ -87,11 +102,13 @@ export function get(url, param) {
   })
 }
 
-export function del(url,param) {
+export function del(url, param) {
   return new Promise((resolve, reject) => {
-    Axios.delete(url, {params: param,paramsSerializer: params => {
-        return QS.stringify(params, { indices: false })
-      }})
+    Axios.delete(url, {
+      params: param, paramsSerializer: params => {
+        return QS.stringify(params, {indices: false})
+      }
+    })
       .then(response => {
         resolve(response)
       }, err => {
@@ -105,6 +122,7 @@ export function del(url,param) {
 
 export default {
   post,
+  postFile,
   put,
   get,
   del

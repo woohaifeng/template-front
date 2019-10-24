@@ -2,7 +2,6 @@
   <!-- ######## 修改form的值form.xxx，与主页面传递过来的值保持一致 ######## -->
   <!-- ######## prop对应rules的值 ######## -->
   <div>
-    <!-- {{JSON.stringify(form)}}-->
     <el-form ref="form" :model="form" :rules="rules" label-width="80px" :disabled="flagAdding || flagReadOnly"
              class="form"
              style="max-height: 58vh;overflow-y: auto"
@@ -113,7 +112,8 @@
               fixed="right"
               label="操作">
               <template slot-scope="scope">
-                <el-button type="text" size="small" icon="el-icon-delete" title="删除" @click="deleteRelations(scope.$index)"></el-button>
+                <el-button type="text" size="small" icon="el-icon-delete" title="删除"
+                           @click="deleteRelations(scope.$index)"></el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -202,7 +202,8 @@
       append-to-body>
       <check-table-relations :tableData="relations" :loadData="loadRelations"
                              :flagLoading="flagInnerChooseRelationsLoading" :back="form"
-                             :cancel="chooseRelationsCancel" :condition="relationCondition" :flagRemember="flagInnerChooseRelationsRemember"/>
+                             :cancel="chooseRelationsCancel" :condition="relationCondition"
+                             :flagRemember="flagInnerChooseRelationsRemember"/>
     </el-dialog>
     <!-- 【END】 -->
   </div>
@@ -297,7 +298,7 @@
     },
     watch: {
       'form.relations': {
-        handler(val,oldVal) {
+        handler(val, oldVal) {
           let temp = [];
           let len = this.form.relations.length;
           if (len <= 2) {
@@ -354,31 +355,31 @@
       chooseHeightCancel() {
         this.flagInnerChooseHeight = false;
       },
-      // 【 --##--##--##--##--##--##--##--## 多选 --##--##--##--##--##--##--##--## 】
-      // 【 ---- 打开Dialog的方法 <chooseRelations> ---- 】
+      // ------------------------------------------------ 多选Dialog ------------------------------------------------
+      // 【 #### 打开Dialog的方法 <chooseRelations> #### 】
       chooseRelations() {
-        // 【 ---- 打开标志 <flagInnerChooseRelations> ---- 】
+        // 【 #### 打开标志 <flagInnerChooseRelations> #### 】
         this.flagInnerChooseRelations = true;
-        // 【 ---- 初始化数据为空，等待初始化 <relations> ---- 】
+        // 【 #### 初始化数据为空，等待初始化 <relations> #### 】
         this.relations = [];
-        // 【 ---- 开始加载数据 <loadRelations>（条件 <relationCondition>、false） ---- 】
-        this.loadRelations(this.relationCondition,false);
+        // 【 #### 开始加载数据 <loadRelations>（条件 <relationCondition>、false） #### 】
+        this.loadRelations(this.relationCondition, false);
       },
-      // 【 ---- 关闭Dialog的方法 <chooseRelationsCancel> ---- 】
+      // 【 #### 关闭Dialog的方法 <chooseRelationsCancel> #### 】
       chooseRelationsCancel() {
-        // 【 ---- <flagInnerChooseRelations> ---- 】
+        // 【 #### <flagInnerChooseRelations> #### 】
         this.flagInnerChooseRelations = false;
       },
-      // 【 ---- 删除一条已选数据 <deleteRelations> ---- 】
+      // 【 #### 删除一条已选数据 <deleteRelations> #### 】
       deleteRelations(index) {
-        // 【 ---- <relations> ---- 】
-        this.form.relations.splice(index,1);
+        // 【 #### <relations> #### 】
+        this.form.relations.splice(index, 1);
       },
-      // 【 ---- <loadRelations> ---- 】
-      loadRelations(condition,remember) {
-        // 【 ---- <flagInnerChooseRelationsRemember> ---- 】
+      // 【 #### <loadRelations> #### 】
+      loadRelations(condition, remember) {
+        // 【 #### <flagInnerChooseRelationsRemember> #### 】
         this.flagInnerChooseRelationsRemember = remember;
-        // 【 ---- <flagInnerChooseRelationsLoading> ---- 】
+        // 【 #### <flagInnerChooseRelationsLoading> #### 】
         this.flagInnerChooseRelationsLoading = true;
         // ######## 数据开始加载，加载结束后关闭加载开始标志
         setTimeout(() => {
@@ -404,13 +405,13 @@
             ];
           }
           this.relationCondition.total = 14;
-          // 【 ---- <flagInnerChooseRelationsLoading> ---- 】
+          // 【 #### <flagInnerChooseRelationsLoading> #### 】
           this.flagInnerChooseRelationsLoading = false;
         }, 1000);
       },
-      // 【 --##--##--##--##--##--##--##--## 多选 END --##--##--##--##--##--##--##--## 】
+      // ------------------------------------------------ 多选Dialog END ------------------------------------------------
 
-      //开始提交，并验证表单的合法性，打开确认框
+      // ------------------------------------------------ 开始提交,验证表单 ------------------------------------------------
       submitForm() {
         this.$refs["form"].validate((valid) => {
           if (valid) {
@@ -423,14 +424,16 @@
           }
         })
       },
-      //确认框确认
+      // ------------------------------------------------ 开始提交,验证表单 END ------------------------------------------------
+
+      // ------------------------------------------------ 提交并上传数据 ------------------------------------------------
       async addConfirm() {
         //正在添加
         this.flagAdding = true;
         //关闭确认框
         this.addNotConfirm();
         /* ######## 这里填写提交逻辑 ######## */
-        await https.post("/dept/add", this.form).then((response) => {
+        await https.postFile("/template/add", this.form).then((response) => {
           if (response.data.status === 200) {
             this.resetForm();
             this.msg_success(this.global.TEXT_ADD_SUCCESS);
@@ -445,30 +448,38 @@
         //关闭只读和正在添加中状态
         this.flagReadOnly = this.flagAdding = false;
       },
-      //确认框取消（关闭确认框、关闭只读状态）
+      // ------------------------------------------------ 提交并上传数据 END ------------------------------------------------
+
+
+      // ------------------------------------------------ 取消提交 ------------------------------------------------
       addNotConfirm() {
         this.flagPopoverAddVisible = false;
       },
-      //防止用户不通过点击按钮的方式关闭popover
+      // ------------------------------------------------ 取消提交 END ------------------------------------------------
+
+      // ------------------------------------------------ 确认对话框关闭 ------------------------------------------------
       popover_leave() {
         if (!this.flagAdding) {
           this.flagReadOnly = false;
         }
       },
-      //取消
+      // ------------------------------------------------ 确认对话框关闭 END ------------------------------------------------
+
+      // ------------------------------------------------ 取消表单 ------------------------------------------------
       cancelForm() {
         this.resetForm();
         this.cancel();
       },
-      //重置
+      // ------------------------------------------------ 取消表单 END ------------------------------------------------
+
+      // ------------------------------------------------ 重置表单 ------------------------------------------------
       resetForm() {
         // ######## 不显示在表单上的数据，需要手动清空
         this.form.relations.splice(0, this.form.relations.length);
         // ######## END
         this.$refs['form'].resetFields();
-      }
-
-
+      },
+      // ------------------------------------------------ 重置表单 END ------------------------------------------------
     },
     props: ['form', 'ok', 'cancel']
   }
