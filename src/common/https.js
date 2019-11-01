@@ -60,19 +60,20 @@ export function post(url, params) {
   })
 }
 
-export function postFile(url, params) {
-  return new Promise((resolve, reject) => {
-    Axios.post(url, params, {headers: {'Content-Type': 'multipart/form-data'}})
-      .then(response => {
-        resolve(response);
-      }, err => {
-        reject(err);
-      })
-      .catch((error) => {
-        reject(error)
-      })
-  })
-}
+// 如果含有文件，直接使用post即可
+// export function postFile(url, params) {
+//   return new Promise((resolve, reject) => {
+//     Axios.post(url, params, {headers: {'Content-Type': 'multipart/form-data'}})
+//       .then(response => {
+//         resolve(response);
+//       }, err => {
+//         reject(err);
+//       })
+//       .catch((error) => {
+//         reject(error)
+//       })
+//   })
+// }
 
 export function put(url, params) {
   return new Promise((resolve, reject) => {
@@ -122,7 +123,6 @@ export function del(url, param) {
 
 export default {
   post,
-  postFile,
   put,
   get,
   del

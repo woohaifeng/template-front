@@ -2,10 +2,35 @@
   <!-- ######## 修改form的值form.xxx，与主页面传递过来的值保持一致 ######## -->
   <!-- ######## prop对应rules的值 ######## -->
   <div>
+    <!--    {{JSON.stringify(form)}}-->
     <el-form ref="form" :model="form" :rules="rules" label-width="80px" :disabled="flagAdding || flagReadOnly"
              class="form"
              style="max-height: 58vh;overflow-y: auto"
              size="medium">
+      <!-- 单图片 -->
+      <el-row>
+        <el-col :span="6">
+          <el-form-item label="头像" prop="imageUrl">
+            <el-input v-show="false" v-model="form.imageUrl"/>
+            <el-upload
+              :disabled="flagAdding || flagReadOnly"
+              ref="uploadImage"
+              class="avatar-uploader"
+              action="#"
+              accept=".jpg,.jpeg,.png"
+              :show-file-list="false"
+              :auto-upload="false"
+              :on-change="addImage">
+              <img v-if="form.imageUrl" :src="form.imageUrl" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <div class="avatar_delete"><i v-show="form.imageUrl && !(flagAdding || flagReadOnly)"
+                                        class="el-icon-delete cursor-pointer" @click="delImage();"></i></div>
+        </el-col>
+      </el-row>
       <!-- 输入框 -->
       <el-row>
         <el-col :span="12">
@@ -150,6 +175,25 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <!-- 多文件 -->
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="文件" prop="flagFiles">
+            <el-input v-show="false" v-model="form.flagFiles"/>
+            <el-upload
+              class="upload-demo"
+              ref="uploadFiles"
+              action="#"
+              multiple
+              :limit="3"
+              :auto-upload="false"
+              :on-change="addFiles"
+              :on-remove="removeFiles">
+              <el-button :disabled="flagAdding || flagReadOnly" size="small" type="primary">添加</el-button>
+            </el-upload>
+          </el-form-item>
+        </el-col>
+      </el-row>
       <!-- 文本框 -->
       <el-row>
         <el-col :span="24">
@@ -209,7 +253,7 @@
   </div>
 </template>
 <script>
-  import https from '../../../common/https';
+  import https from '../../../../common/https';
 
   export default {
     name: 'TemplateAdd',
@@ -245,6 +289,9 @@
 
         // 【表单验证规则】
         rules: {
+          imageUrl: [
+            this.formRequiredOnChange("请上传头像")
+          ],
           name: [
             this.formRequiredOnChange("请输入名称"),
             this.formLengthOnChange(2, 16)
@@ -287,12 +334,18 @@
           ],
           ct: [
             this.formRequiredOnChange('请输入时间')
+          ],
+          flagFiles: [
+            this.formRequiredOnChange('请上传文件')
           ]
         },
         // 【END】
+        heights: [],
 
         /*template*/
-        heights: []
+        // imageUrl: '',
+        image: null,
+        files: []
         /*template end*/
       }
     },
@@ -315,6 +368,26 @@
         },
         deep: true,
         immediate: true
+      },
+      'form.imageUrl': {
+        handler(val, oldVal) {
+          if (!val) {
+            this.image = null;
+          }
+        },
+        deep: true,
+        immediate: true
+      },
+      /* 多文件 */
+      'form.flagFiles': {
+        // uploadFiles
+        handler(val, oldVal) {
+          if (!val) {
+            this.$refs["uploadFiles"].clearFiles();
+            this.files = [];
+          }
+        },
+        deep: true
       }
     },
     methods: {
@@ -342,7 +415,6 @@
         ];
         if (this.form.height.id) {
           for (let i = 0; i < this.heights.length; i++) {
-            console.log('1');
             if (this.heights[i].id == this.form.height.id) {
               this.heights[i].checked = this.heights[i].id;
               break;
@@ -432,8 +504,19 @@
         this.flagAdding = true;
         //关闭确认框
         this.addNotConfirm();
+
+        // ######## 如果表单中含有文件，需要在这里封装一个formData，将数据和文件添加进去，有这个formData提交，负责直接提交this.form
+        let formWithFile = new FormData(this.form);
+        formWithFile.append("image", this.image.raw);
+        formWithFile.append("name", "zs");
+        for (let index in this.files) {
+          formWithFile.append("files", this.files[index].raw);
+        }
+        // ######## END
+
         /* ######## 这里填写提交逻辑 ######## */
-        await https.postFile("/template/add", this.form).then((response) => {
+        // await https.post("/template/add", this.form).then((response) => {
+        await https.post("/template/add", formWithFile).then((response) => {
           if (response.data.status === 200) {
             this.resetForm();
             this.msg_success(this.global.TEXT_ADD_SUCCESS);
@@ -457,20 +540,20 @@
       },
       // ------------------------------------------------ 取消提交 END ------------------------------------------------
 
-      // ------------------------------------------------ 确认对话框关闭 ------------------------------------------------
+      // ------------------------------------------------ 取消确认 ------------------------------------------------
       popover_leave() {
         if (!this.flagAdding) {
           this.flagReadOnly = false;
         }
       },
-      // ------------------------------------------------ 确认对话框关闭 END ------------------------------------------------
+      // ------------------------------------------------ 取消确认 END ------------------------------------------------
 
-      // ------------------------------------------------ 取消确认 ------------------------------------------------
+      // ------------------------------------------------ 取消表单 ------------------------------------------------
       cancelForm() {
         this.resetForm();
         this.cancel();
       },
-      // ------------------------------------------------ 取消确认 END ------------------------------------------------
+      // ------------------------------------------------ 取消表单 END ------------------------------------------------
 
       // ------------------------------------------------ 重置表单 ------------------------------------------------
       resetForm() {
@@ -480,6 +563,33 @@
         this.$refs['form'].resetFields();
       },
       // ------------------------------------------------ 重置表单 END ------------------------------------------------
+
+      // ------------------------------------------------ 上传单个图片 ------------------------------------------------
+      addImage(file, fileList) {
+        //用于回显
+        this.form.imageUrl = URL.createObjectURL(file.raw);
+        //图片的源文件
+        this.image = file;
+      },
+      delImage() {
+        this.form.imageUrl = null;
+      },
+      // ------------------------------------------------ 上传单个图片 END ------------------------------------------------
+
+      // ------------------------------------------------ 上传单个图片 ------------------------------------------------
+      addFiles(file, fileList) {
+        this.files = fileList;
+        if (this.files.length > 0) {
+          this.form.flagFiles = 1;
+        }
+      },
+      removeFiles(file, fileList) {
+        this.files = fileList;
+        if (this.files.length <= 0) {
+          this.form.flagFiles = null;
+        }
+      }
+      // ------------------------------------------------ 上传单个图片 END ------------------------------------------------
     },
     props: ['form', 'ok', 'cancel']
   }

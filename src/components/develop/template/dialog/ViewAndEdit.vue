@@ -28,7 +28,7 @@
   </el-form>
 </template>
 <script>
-  import https from '../../../common/https';
+  import https from '../../../../common/https';
 
   export default {
     name: 'TemplateViewAndEdit',

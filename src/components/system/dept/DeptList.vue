@@ -1,6 +1,6 @@
 <template>
   <div style="height:100%;" class="data-list">
-    <!--######## 查询条件 ########-->
+    <!-- 查询-->
     <el-form :inline="true" class="demo-form-inline" style="margin-bottom: 0px;" ref="search" :model="search">
       <el-row :gutter="20" class="el-search-row">
         <el-col :span="6">
@@ -25,7 +25,7 @@
     </el-form>
     <!-- 操作 -->
     <el-divider content-position="right" style="margin:18px 0;">
-      <strong>【 开发模板 】</strong>
+      <strong>【 部门管理 】</strong>
 
       <el-button-group>
         <el-button type="success" icon="el-icon-refresh" size="mini" @click="loadData(search)">刷新</el-button>
@@ -55,15 +55,6 @@
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" class="demo-table-expand">
-              <el-form-item label="薪水">
-                <span>{{ props.row.money }}</span>
-              </el-form-item>
-              <el-form-item label="日期">
-                <span>{{ dateSimpleFormat(props.row.hirdate) }}</span>
-              </el-form-item>
-              <el-form-item label="时间">
-                <span>{{ dateTimeSimpleFormat(props.row.ct) }}</span>
-              </el-form-item>
               <el-form-item label="描述">
                 <span>{{ props.row.des }}</span>
               </el-form-item>
@@ -77,15 +68,7 @@
         <!-- 如果列数不止一列，可用width="120"属性指定列的宽度 -->
         <el-table-column
           prop="name"
-          label="姓名">
-        </el-table-column>
-        <el-table-column
-          prop="sex"
-          label="性别">
-        </el-table-column>
-        <el-table-column
-          prop="marry"
-          label="已婚">
+          label="名称">
         </el-table-column>
         <el-table-column
           fixed="right"
@@ -122,11 +105,9 @@
         :cancel="del_cancel"/>
     </el-popover>
     <!--创建模态框-->
-    <!-- ########修改title######## -->
-    <el-dialog title="创建模板" :visible.sync="flagDialogCreateVisible" center :append-to-body='true' :lock-scroll="false"
-               top="5vh" width="70%" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
+    <el-dialog title="创建部门" :visible.sync="flagDialogCreateVisible" center :append-to-body='true' :lock-scroll="false"
+               top="8vh" width="60%" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
       <dept-add
-        ref="add"
         :form="form"
         :ok="add_ok"
         :cancel="add_cancel"></dept-add>
@@ -134,7 +115,7 @@
     <!--查看和编辑模态框-->
     <el-dialog :title="flagDialogVAEType?'部门':'编辑部门'" :visible.sync="flagDialogVAEVisible" center :append-to-body='true'
                :lock-scroll="false"
-               top="5vh" width="60%" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
+               top="8vh" width="60%" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
       <dept-view-and-edit
         :form="form"
         :flag-initing="flagDialogVAEIniting"
@@ -148,12 +129,12 @@
   </div>
 </template>
 <script>
-  import https from '../../common/https';
-  import DeptAdd from './curd/Add.vue';
-  import DeptViewAndEdit from './curd/ViewAndEdit.vue'
+  import https from '../../../common/https';
+  import DeptAdd from './dialog/Add.vue';
+  import DeptViewAndEdit from './dialog/ViewAndEdit.vue'
 
   export default {
-    name: 'Template',
+    name: 'DeptList',
     components: {DeptAdd, DeptViewAndEdit},
     data() {
       return {
@@ -188,30 +169,11 @@
         search: {
           name: null
         },
-        form: {
-          name: '',
-          age: null,
-          money: null,
-          email: null,
-          phone: null,
-          marry: null,
-          height: {id:null,value:null},
-          sex: null,
-          relations: [],
-          relationsJoin: null,
-          interest: [],
-          hirdate: new Date(),
-          ct: new Date(),
-          des: ''
-        },
+        form: {},
         tableData: [],
         multipleSelection: [],
         temp: {}
       };
-    },
-    created() {
-    },
-    mounted() {
     },
     methods: {
       //加载table数据
@@ -221,21 +183,13 @@
           this.flagLoadingData = true;
         }
         //获取数据
-        /*########这里修改url路径########*/
-        await https.get(this.urls.TEMPLATE.LIST + "/" + this.page + "/" + this.size, search).then((response) => {
+        await https.get(this.urls.DEPT.LIST + "/" + this.page + "/" + this.size, search).then((response) => {
           //数据加载成功，隐藏加载失败提示
           if (this.flagLoadError) {
             this.flagLoadError = false;
           }
-          /*########在这里赋值########*/
+          //加载成功，填充数据
           this.tableData = response.data.data;
-          /*########如果tableData有后台返回的java.util.date，在这里进行格式化，也可以在数据展示的时候调用########*/
-          // this.tableData.forEach((row,index)=> {
-            //yyyy-MM-dd
-            // row.hirdate = this.dateFormat(row.hirdate);
-            //hh:ss
-            // row.ct = this.dateTimeFormat(row.ct);
-          // })
           this.total = response.data.cursor.total;
         }).catch((error) => {
           //加载失败，数据设置为空
@@ -262,6 +216,10 @@
       create() {
         //打开创建对话框
         this.flagDialogCreateVisible = true;
+        this.form = {
+          name: '',
+          des: ''
+        };
       },
       //创建成功后的回调方法，关闭对话框并重新加载数据
       add_ok() {
@@ -279,12 +237,12 @@
       //批量删除
       del() {
         this.flagLoadingData = true;
-        let ids = [];
+        var ids = [];
         this.multipleSelection.forEach((selection, index) => {
           ids.push(selection.id);
         });
         this.del_cancel();
-        https.del("/dept/deletes", {ids: ids}).then((response) => {
+        https.del(this.urls.DEPT.DELETES, {ids: ids}).then((response) => {
           if (response.data.status === 200) {
             this.msg_success(this.global.TEXT_DEL_SUCCESS);
             this.loadData(this.search);

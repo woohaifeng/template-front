@@ -3,13 +3,12 @@
     <!-- {{JSON.stringify(multipleSelection)}} -->
     <!-- 被选中的行，hasSelected表示已经选过的行，不会被添加到对象中去  -->
     <!-- 【查询条件】 -->
-    <el-form :inline="true" class="demo-form-inline" style="margin-bottom: 0px;" ref="search" :model="search"
+    <el-form :inline="true" class="demo-form-inline" style="margin-bottom: 0px;" ref="search" :model="condition.search"
              size="mini">
       <el-row :gutter="20" class="el-search-row">
         <el-col :span="8">
           <el-form-item label="名称：" prop="name">
-            <el-input type="text" v-model="condition.search.name">
-            </el-input>
+            <el-input type="text" v-model="condition.search.name"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
@@ -105,7 +104,7 @@
             //原先被保留的select
             let idsSelectJoin = null;
             let idsSelect = [];
-            if (this.multipleSelection) {
+            if (this.multipleSelection.length > 0) {
               this.multipleSelection.forEach((data) => {
                 idsSelect.push(data.id);
               })
@@ -143,7 +142,7 @@
       },
       // ######## 确认选择，将选择的行currentRow回填给back
       okSelect() {
-        if (this.multipleSelection) {
+        if (this.multipleSelection.length > 0) {
           this.multipleSelection.forEach((selection) => {
             if (!selection.hasSelected) {
               this.back.relations.push(selection);

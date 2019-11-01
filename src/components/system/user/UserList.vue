@@ -162,8 +162,8 @@
 
 </template>
 <script>
-  import https from '../../common/https'
-  import DeptAdd from './curd/Add.vue';
+  import https from '../../../common/https'
+  import DeptAdd from './dialog/Add.vue';
 
   export default {
     name: 'DeptList',

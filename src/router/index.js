@@ -5,9 +5,10 @@ import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import Home from '@/components/Home'
 import Dashboard from '@/components/dashboard/Dashboard'
-import DeptList from '@/components/dept/DeptList'
-import UserList from '@/components/user/UserList'
-import Template from '@/components/template/Template'
+import DeptList from '@/components/system/dept/DeptList'
+import UserList from '@/components/system/user/UserList'
+import Template from '@/components/develop/template/Template'
+import Form from '@/components/develop/form/Form'
 
 Vue.use(Router)
 
@@ -47,6 +48,10 @@ export default new Router({
         {
           path: "Template",
           component: Template
+        },
+        {
+          path: "Form",
+          component: Form
         }
       ]
     },

@@ -91,6 +91,17 @@ Functions.install = function (Vue, options) {
       callback();
     }
   }
+  //检查boolean:-1为false，1为true
+  Vue.prototype.checkBoolean = function (rule, value, callback) {
+    if(!value) {
+      return;
+    }
+    if (value<0) {
+      callback(new Error('错误'));
+    } else {
+      callback();
+    }
+  }
   //Form
   //required
   Vue.prototype.formRequiredOnChange = function(msg) {

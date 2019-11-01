@@ -48,6 +48,7 @@ html, body {
 .fc-white {
   color: #FFFFFF
 }
+
 .fc-black {
   color: #000000
 }
@@ -136,24 +137,28 @@ html, body {
 .el-popper[x-placement^=bottom] .popper__arrow {
   border-bottom-color: black;
 }
+
 /*.el-popper[x-placement^=bottom] .popper__arrow::after {*/
 /*  border-bottom-color: #E6A23CF2 !important;*/
 /*}*/
 .el-popper[x-placement^=top] .popper__arrow {
   border-top-color: black;
 }
+
 /*.el-popper[x-placement^=top] .popper__arrow::after {*/
 /*  border-top-color: #E6A23CF2 !important;*/
 /*}*/
 .el-popper[x-placement^=left] .popper__arrow {
   border-left-color: black;
 }
+
 /*.el-popper[x-placement^=left] .popper__arrow::after {*/
 /*  border-left-color: #E6A23CF2 !important;*/
 /*}*/
 .el-popper[x-placement^=right] .popper__arrow {
   border-right-color: black;
 }
+
 /*.el-popper[x-placement^=right] .popper__arrow::after {*/
 /*  border-right-color: #E6A23CF2 !important;*/
 /*}*/
@@ -173,7 +178,6 @@ html, body {
   margin-bottom: 0;
   width: 50%;
 }
-
 
 
 .el-menu {
@@ -200,28 +204,33 @@ html, body {
   /*background-color: #9970dbCC;*/
   background-color: #6EA7E4CC;
 }
+
 /*menu的颜色*/
 /*.home-left-menu-color {*/
 /*  color:#1A091A;*/
 /*}*/
 
 /*左侧菜单图标的颜色*/
-#menu .el-submenu__title i,#menu .el-menu-item i {
-  color:#1A091A;
+#menu .el-submenu__title i, #menu .el-menu-item i {
+  color: #1A091A;
 }
+
 .el-menu-item.is-active i {
   color: inherit !important;
 }
-  /*左侧菜单的高度*/
-.el-menu-item,.el-submenu__title {
-  height:48px !important;
+
+/*左侧菜单的高度*/
+.el-menu-item, .el-submenu__title {
+  height: 48px !important;
   line-height: 48px !important;
-  font-size:8px;
+  font-size: 8px;
 }
+
 /*菜单悬浮背景色*/
-#menu .el-menu-item:focus,#menu .el-menu-item:hover,#menu .el-submenu__title:focus,#menu .el-submenu__title:hover{
+#menu .el-menu-item:focus, #menu .el-menu-item:hover, #menu .el-submenu__title:focus, #menu .el-submenu__title:hover {
   background-color: #FFFFFF;
 }
+
 /*--------1级菜单--------*/
 .menu-1 {
   background-color: #00000000;
@@ -252,11 +261,13 @@ html, body {
 
 /*输入框、文本框*/
 /*只读时字体颜色，边框*/
-.el-input.is-disabled .el-input__inner,.el-textarea.is-disabled .el-textarea__inner{
+.el-input.is-disabled .el-input__inner, .el-textarea.is-disabled .el-textarea__inner {
   color: #409eff;
   border-color: transparent;
 }
+
 /*upload*/
+/* 单个图片 */
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
@@ -283,3 +294,10 @@ html, body {
   height: 118px;
   display: block;
 }
+
+.avatar_delete {
+  height: 118px;
+  line-height: 118px;
+}
+
+
