@@ -1,7 +1,7 @@
 <template>
-  <div style="height:100%;" class="data-list">
+  <div style="height:100%;">
     <!--######## 查询条件 ########-->
-    <el-form :inline="true" class="demo-form-inline" style="margin-bottom: 0px;" ref="search" :model="search">
+    <el-form :inline="true" style="margin-bottom: 0px;" ref="search" :model="search">
       <el-row :gutter="20" class="el-search-row">
         <el-col :span="6">
           <el-form-item label="名称：" prop="name">

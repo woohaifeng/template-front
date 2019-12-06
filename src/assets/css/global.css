@@ -300,4 +300,28 @@ html, body {
   line-height: 118px;
 }
 
+/*ui li*/
+ul.cell-list {
+  overflow: hidden;
+  list-style: none;
+  padding: 0;
+  border: 1px solid #eaeefb;
+  border-radius: 4px;
+}
+
+.cell-list li {
+  float: left;
+  width: 10%;
+  text-align: center;
+  height: 120px;
+  line-height: 120px;
+  color: #666;
+  font-size: 13px;
+  transition: color .15s linear;
+  border-right: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  margin-right: -1px;
+  margin-bottom: -1px;
+}
+
 

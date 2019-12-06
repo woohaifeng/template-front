@@ -4,7 +4,6 @@
   <div>
     <!--    {{JSON.stringify(form)}}-->
     <el-form ref="form" :model="form" :rules="rules" label-width="80px" :disabled="flagAdding || flagReadOnly"
-             class="form"
              style="max-height: 58vh;overflow-y: auto"
              size="medium">
       <!-- 单图片 -->
